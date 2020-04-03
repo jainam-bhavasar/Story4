@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Story2</string>
+    <string name="hello">hello</string>
+    <string name="add_new_files">Add new files</string>
+    <string name="book_name">Book name</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

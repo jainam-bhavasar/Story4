@@ -1,0 +1,37 @@
+task clearCacheModules() {
+    final String FILTER1 = "com.example."
+    final String FILTER2 = "descriptors"
+    final String CACHE_BASE_PACKAGE = "/caches/modules-2/"
+    doLast {
+        def gradle = project.getGradle()
+        // Top level filter
+        FilenameFilter comFilter = new FilenameFilter() {
+            @Override
+            boolean accept(File file, String s) {
+                return s.startsWith(FILTER1)
+            }
+        }
+
+        // Next level filter
+        FilenameFilter descriptorFilter = new FilenameFilter() {
+            @Override
+            boolean accept(File file, String s) {
+                return s.startsWith(FILTER2)
+            }
+        }
+        new File("${gradle.getGradleUserHomeDir().getAbsolutePath()}$CACHE_BASE_PACKAGE").listFiles().each {
+            // Top level filter
+            it.listFiles(comFilter).each {
+                it.deleteDir()
+            }
+            // Next level filter
+            it.listFiles(descriptorFilter).each {
+                if (it.getName().startsWith(FILTER2)) {
+                    it.listFiles(comFilter).each {
+                        it.deleteDir()
+                    }
+                }
+            }
+        }
+    }
+}
