@@ -1,5 +1,8 @@
 package com.jainam.story2
 
+import android.content.res.AssetManager
+import com.jainam.story2.utils.ReadPdf
+import com.jainam.story2.utils.ReadPdfOCR
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -12,6 +15,11 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
+
+       // val readPdfOCR = ReadPdfOCR(am!!)
+        //val string = readPdfOCR.getText(readPdfOCR.getPageBitmap(2))
+
+
         assertEquals(4, 2 + 2)
     }
 }

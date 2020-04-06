@@ -28,8 +28,7 @@ interface BookDatabaseDao
     @Query("DELETE FROM Book1")
     fun deleteAll()
 
-    @Query("SELECT bookText FROM Book1 WHERE uriAsString = :uriString")
-    fun getBookText(uriString:String) : String
+
 
 //    @Query("SELECT type FROM Book1 WHERE uriAsString =:uriString")
 //    fun getType(uriString: String):String

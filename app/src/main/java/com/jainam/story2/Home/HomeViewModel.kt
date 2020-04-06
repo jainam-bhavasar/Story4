@@ -12,6 +12,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.jainam.story2.database.Book1
 import com.jainam.story2.database.BookDatabaseDao
+import com.jainam.story2.database.Pages
 import com.jainam.story2.utils.GetText
 import com.jainam.story2.utils.Type
 import com.jainam.story2.utils.jsonTypeConvertors
@@ -46,12 +47,14 @@ class HomeViewModel(private var databaseDao: BookDatabaseDao, application:Applic
             //getting the total pages
             val totalPages = getTotalPages(uri,type)
             val booleans:Array<Boolean> = Array(totalPages) { false }
+            val pageTexts:Array<String> = Array(totalPages){" "}
+            val pages = Pages( pageTexts,booleans)
             val book  = Book1(
                 uri.toString(),
                 bookName =  name,
                 type = type,
                 bookLength = totalPages,
-                isPageAvailableArray = booleanListToJson(booleans)
+                pages  = pages
             )
 
            insertThumbnail(book)

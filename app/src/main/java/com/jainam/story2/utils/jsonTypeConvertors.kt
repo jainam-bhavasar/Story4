@@ -5,9 +5,9 @@ import com.google.gson.reflect.TypeToken
 
 interface jsonTypeConvertors {
     //type converters
-     fun stringListToJson(value: ArrayList<String>):String = Gson().toJson(value)
-     fun fromStringToStringList(value: String): ArrayList<String> {
-         val type = object: TypeToken<ArrayList<String>>() {}.type
+     fun stringListToJson(value: Array<String>):String = Gson().toJson(value)
+     fun fromStringToStringList(value: String): Array<String> {
+         val type = object: TypeToken<Array<String>>() {}.type
          return Gson().fromJson(value, type)
 
      }
