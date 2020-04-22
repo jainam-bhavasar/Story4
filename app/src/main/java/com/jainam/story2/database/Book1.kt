@@ -14,5 +14,6 @@ data class Book1 (val uriAsString: String,
                   var pages: Pages,
                   var bookLength:Int = 0,
                   var type: Type,
+                  val language :String,
                   var isListUpdated:Boolean  = false
 )

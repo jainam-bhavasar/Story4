@@ -1,15 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
+        <data>
+                <variable
+                    name="thumbnail"
+                    type="com.jainam.story2.database.Thumbnail" />
+                <variable
+                    name="clickListener"
+                    type="com.jainam.story2.home.ThumbnailClickListener" />
+        </data>
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginVertical="10dp"
+            android:onClick="@{() -> clickListener.onClick(thumbnail)}"
+            android:background="@drawable/ic_rectangle">
 
-    <TextView
-        android:id="@+id/thumbnailTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
-</LinearLayout>
+                <TextView
+                    app:bookName="@{thumbnail}"
+                    android:id="@+id/thumbnailTextView"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:lines="1"
+                    android:singleLine="true"
+                    tools:text="Alice in the Wonderland"
+                    android:textColor="@color/colorPrimary"
+                    app:autoSizeMaxTextSize="14sp"
+                    app:autoSizeMinTextSize="8sp"
+                    app:autoSizeTextType="uniform"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/appCompatImageView2"
+                    android:layout_width="33dp"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_pdf"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

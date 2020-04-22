@@ -22,8 +22,11 @@ interface BookDatabaseDao
 //    @Query("SELECT * FROM Book1 ORDER BY bookID DESC")
 //    fun getAllThumbnails():LiveData<List<Book1>>
 
-    @Query("SELECT bookID,bookName FROM Book1 ORDER BY bookID DESC")
+    @Query("SELECT bookID,bookName,uriAsString FROM Book1 ORDER BY bookID DESC")
     fun getAllThumbnails():LiveData<List<Thumbnail>>
+
+    @Query("SELECT bookID,bookName,uriAsString FROM Book1 ORDER BY bookID DESC")
+    fun getAllThumbnailsWithoutLiveData():List<Thumbnail>
 
     @Query("DELETE FROM Book1")
     fun deleteAll()

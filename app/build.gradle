@@ -15,11 +15,16 @@ apply plugin: 'kotlinx-serialization'
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
     defaultConfig {
         applicationId "com.jainam.story2"
         minSdkVersion 21
         multiDexEnabled true
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -48,6 +53,9 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 
@@ -57,12 +65,14 @@ dependencies {
     def arch_version = "2.1.0"
     def activity_version = "1.1.0"
 
-    def nav_version = "2.3.0-alpha04"
+    def nav_version = "2.3.0-alpha05"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'androidx.annotation:annotation:1.1.0'
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
@@ -80,18 +90,18 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
     //tesseract
-   // implementation 'com.rmtheis:tess-two:9.0.0'
+    // implementation 'com.rmtheis:tess-two:9.0.0'
     //implementation 'cz.adaptech.android:tesseract4android:2.1.0'
 
     //e-pub
     implementation files('libs/epublib-core-latest')
     implementation files('libs/slf4j-android-1.6.1-RC1')
 
+
     //pdf
     implementation files('libs/itext-io-7.1.10')
     implementation files('libs/itext-kernel-7.1.10')
-    //gson
-    implementation 'com.google.code.gson:gson:2.8.6'
+
 
     //apache-poi-for microsoft document
     //implementation files('libs/poi-3.17.jar')
@@ -99,8 +109,11 @@ dependencies {
     //implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '4.0.1'
     //implementation group: 'org.apache.poi', name: 'poi', version: '3.17'
 
-   //ocr text scanning
+    //ocr text scanning
     implementation 'com.google.firebase:firebase-ml-vision:24.0.1'
+
+    //pdf rendering
+    implementation 'com.github.barteksc:pdfium-android:1.9.0'
 
     //detecting the language
     implementation 'com.google.firebase:firebase-ml-natural-language:22.0.0'
@@ -111,12 +124,24 @@ dependencies {
     implementation 'com.google.firebase:firebase-ml-natural-language-translate-model:20.0.7'
 
     //firebase analytics
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+
+    //Robolectric environment
+    testImplementation 'androidx.test:core:1.2.0'
+    testImplementation "org.robolectric:robolectric:4.0.2"
+
+    //  Mockito framework
+    // testImplementation 'org.mockito:mockito-core:1.10.19'
 
     //kotlin serialisable
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
-    //pdfbox
-    implementation 'com.tom_roush:pdfbox-android:1.8.10.1'
+
+    //google sign in + firebase
+    implementation 'com.google.firebase:firebase-auth:19.3.0'
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+
+    //viewPager2
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'

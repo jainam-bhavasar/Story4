@@ -1,42 +1,49 @@
 package com.jainam.story2.utils
 
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.pdf.PdfRenderer
+import android.net.Uri
+import android.os.Environment
 import android.os.ParcelFileDescriptor
-import android.os.ParcelFileDescriptor.MODE_READ_ONLY
+import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
+import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata
+import com.shockwave.pdfium.PdfiumCore
 import java.io.*
-import java.net.URI
 
-class ReadPdfOCR(inputStream: InputStream) {
+class ReadPdfOCR(inputStream: InputStream,val context: Context,val uri: Uri) {
 
-    private val parcelFileDescriptor: ParcelFileDescriptor
-    private val renderer :PdfRenderer
-    val totalPages :Int
+    private val parcelFileDescriptor: ParcelFileDescriptor = context.contentResolver.openFileDescriptor(uri, "r")!!
+    private val renderer :PdfRenderer=PdfRenderer(parcelFileDescriptor)
+    val totalPages :Int = renderer.pageCount
     private  var pageNum = 1
-    init {
-        parcelFileDescriptor=ParcelFileDescriptor.open(createFileFromInputStream(inputStream),MODE_READ_ONLY)
-        renderer= PdfRenderer(parcelFileDescriptor)
-        totalPages = renderer.pageCount
-    }
-   private val  bitmap:Bitmap
-       get() {
-       val page = renderer.openPage(pageNum-1)
-       val ratio = page.width.toFloat()/page.height
-       val mBitmap:Bitmap = Bitmap.createBitmap(360,(ratio*360).toInt(),Bitmap.Config.ARGB_8888)
-       page.render(mBitmap,null,null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY)
-       return mBitmap
-   }
+
+
+
+    private fun  bitmap():Bitmap
+      {
+          val pdfiumCore = PdfiumCore(context.applicationContext)
+          val pd: ParcelFileDescriptor = context.contentResolver.openFileDescriptor(uri, "r")!!
+          val pdfDocument = pdfiumCore.newDocument(pd)
+          val width = pdfiumCore.getPageWidthPoint(pdfDocument, pageNum)
+          val height = pdfiumCore.getPageHeightPoint(pdfDocument, pageNum)
+          val mBitmap = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888)
+          pdfiumCore.renderPageBitmap(pdfDocument, mBitmap, pageNum, 0, 0, width, height)
+          pdfiumCore.closeDocument(pdfDocument) // important!
+          return mBitmap
+      }
 
     fun getText(pageNumber: Int):String{
         pageNum = pageNumber
-        val image = FirebaseVisionImage.fromBitmap(bitmap)
-        val detector = FirebaseVision.getInstance().cloudDocumentTextRecognizer
+        val image = FirebaseVisionImage.fromBitmap(bitmap())
+        val detector = FirebaseVision.getInstance().onDeviceTextRecognizer
         var text = ""
-        detector.processImage(image)
+       val result =  detector.processImage(image)
             .addOnSuccessListener { firebaseVisionDocumentText ->
                text = firebaseVisionDocumentText.text
+                Log.d("pages",text)
                 // Task completed successfully
                 // ...
             }
@@ -45,25 +52,9 @@ class ReadPdfOCR(inputStream: InputStream) {
                 // Task failed with an exception
                 // ...
             }
+
         return text
     }
 
-    private fun createFileFromInputStream(inputStream: InputStream): File? {
-        try {
-            val f = File("new FilePath")
-            val outputStream: OutputStream = FileOutputStream(f)
-            val buffer = ByteArray(1024)
-            var length = 0
-            while (inputStream.read(buffer).also({ length = it }) > 0) {
-                outputStream.write(buffer, 0, length)
-            }
-            outputStream.close()
-            inputStream.close()
-            return f
-        } catch (e: IOException) {
-            //Logging exception
-        }
-        return null
-    }
 
 }

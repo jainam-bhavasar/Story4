@@ -9,13 +9,14 @@ class ReadPdf(inputStream: InputStream) {
 
 
     //creating pdf reader from the input stream
-    private val reader = PdfReader(inputStream)
+    private var reader = PdfReader(inputStream)
 
     //creating document from reader
-    private val document = PdfDocument(reader)
+    private var document = PdfDocument(reader)
 
     //total pages
-    val totalPages = document.numberOfPages
+    var totalPages = document.numberOfPages
+
 
     //suspend function to extract pdf text of current page
     fun getPdfPageText(pageNum: Int):String{
