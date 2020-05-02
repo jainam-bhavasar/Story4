@@ -11,9 +11,7 @@ data class Book1 (val uriAsString: String,
                   var bookName:String = "",
                   @PrimaryKey (autoGenerate = true)
                   var bookID:Long = 0L,
-                  var pages: Pages,
                   var bookLength:Int = 0,
                   var type: Type,
-                  val language :String,
-                  var isListUpdated:Boolean  = false
+                  val language :String
 )

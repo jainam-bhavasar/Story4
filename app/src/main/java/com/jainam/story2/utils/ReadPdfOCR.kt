@@ -10,7 +10,6 @@ import android.util.Log
 import com.google.firebase.ml.vision.FirebaseVision
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 import com.google.firebase.ml.vision.common.FirebaseVisionImageMetadata
-import com.shockwave.pdfium.PdfiumCore
 import java.io.*
 
 class ReadPdfOCR(inputStream: InputStream,val context: Context,val uri: Uri) {
@@ -22,38 +21,12 @@ class ReadPdfOCR(inputStream: InputStream,val context: Context,val uri: Uri) {
 
 
 
-    private fun  bitmap():Bitmap
-      {
-          val pdfiumCore = PdfiumCore(context.applicationContext)
-          val pd: ParcelFileDescriptor = context.contentResolver.openFileDescriptor(uri, "r")!!
-          val pdfDocument = pdfiumCore.newDocument(pd)
-          val width = pdfiumCore.getPageWidthPoint(pdfDocument, pageNum)
-          val height = pdfiumCore.getPageHeightPoint(pdfDocument, pageNum)
-          val mBitmap = Bitmap.createBitmap(width,height,Bitmap.Config.ARGB_8888)
-          pdfiumCore.renderPageBitmap(pdfDocument, mBitmap, pageNum, 0, 0, width, height)
-          pdfiumCore.closeDocument(pdfDocument) // important!
-          return mBitmap
-      }
+
 
     fun getText(pageNumber: Int):String{
-        pageNum = pageNumber
-        val image = FirebaseVisionImage.fromBitmap(bitmap())
-        val detector = FirebaseVision.getInstance().onDeviceTextRecognizer
-        var text = ""
-       val result =  detector.processImage(image)
-            .addOnSuccessListener { firebaseVisionDocumentText ->
-               text = firebaseVisionDocumentText.text
-                Log.d("pages",text)
-                // Task completed successfully
-                // ...
-            }
-            .addOnFailureListener { e ->
-                text = ""
-                // Task failed with an exception
-                // ...
-            }
+//
 
-        return text
+        return " "
     }
 
 

@@ -11,7 +11,7 @@ import android.provider.OpenableColumns
 import androidx.lifecycle.AndroidViewModel
 import com.jainam.story2.database.Book1
 import com.jainam.story2.database.BookDatabaseDao
-import com.jainam.story2.database.Pages
+import com.jainam.story2.database.Thumbnail
 import com.jainam.story2.utils.GetText
 import com.jainam.story2.utils.Type
 //import com.googlecode.tesseract.android.TessBaseAPI
@@ -41,30 +41,31 @@ class HomeViewModel(private var databaseDao: BookDatabaseDao, application:Applic
             //specifying the type
             val type = enumValueOf<Type>(name.substringAfterLast('.')
                 .toUpperCase(Locale.ROOT))
-
+            val nameWithoutSuffix = name.removeSuffix(".pdf")
             //getting the total pages
             val totalPagesAndLanguage = getTotalPagesAndLanguage(uri,type)
             val booleans:Array<Boolean> = Array(totalPagesAndLanguage.first) { false }
             val pageTexts:Array<String> = Array(totalPagesAndLanguage.first){" "}
-            val pages = Pages( pageTexts,booleans)
             val book  = Book1(
                 uri.toString(),
-                bookName =  name,
+                bookName =  nameWithoutSuffix,
                 type = type,
                 bookLength = totalPagesAndLanguage.first,
-                pages  = pages,
                 language = totalPagesAndLanguage.second
             )
 
            insertThumbnail(book)
         }
     }
+
+
     fun insert(book1: Book1){
         uiScope.launch {
 
             insertThumbnail(book1)
         }
     }
+
     private suspend fun insertThumbnail(book: Book1) {
         withContext(Dispatchers.IO){
             databaseDao.insert(book)
@@ -79,10 +80,21 @@ class HomeViewModel(private var databaseDao: BookDatabaseDao, application:Applic
             deleteAllThumbnails()
         }
     }
+
     private suspend fun deleteAllThumbnails(){
         withContext(Dispatchers.IO){
             databaseDao.deleteAll()
         }
+    }
+
+    fun  delete(thumbnail: Thumbnail){
+        uiScope.launch {
+            withContext(Dispatchers.IO){
+               val book =  databaseDao.get(thumbnail.uriAsString)
+                databaseDao.delete(book)
+            }
+        }
+
     }
 
 

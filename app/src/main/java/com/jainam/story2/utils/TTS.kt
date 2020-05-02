@@ -15,57 +15,46 @@ class TTS(
     private val context: Context
 ) {
 
-     val tts = TextToSpeech(context, onInitListener(),"com.google.android.tts")
-
+    val tts = TextToSpeech(context, onInitListener(),"com.google.android.tts")
+    val isSpeakingFinished = MutableLiveData(false)
+    private var queuedText = " "
+    private val tag = "TTS"
     private fun onInitListener(): TextToSpeech.OnInitListener {
         return TextToSpeech.OnInitListener { status ->
             if (status == TextToSpeech.SUCCESS) {
                 isTtsInitialised.postValue(true)
+                Log.d(tag, "onInitListener: $queuedText")
                 speak(queuedText)
-              //  allVoicesOfLang.postValue(getAllVoicesOfLang("en"))
             }
         }
     }
 
     private var isTtsInitialised = MutableLiveData(false)
-    private var queuedText = ""
 
 
     fun speak(text:String){
 
         if (!isTtsInitialised.value!!){
             queuedText = text
+            Log.d(tag, "speak: tts.speak() returned early ")
             return
         }
 
-        tts.setOnUtteranceProgressListener(MyUtteranceProgressListener)
+
+
         val params = Bundle()
         params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "")
         tts.speak(text, TextToSpeech.QUEUE_FLUSH,params,"ID")
 
     }
 
-
-    //utterance progress listener
-    object MyUtteranceProgressListener : UtteranceProgressListener() {
-        override fun onDone(utteranceId: String?) {
-                Log.d("tts","sythesization done")
-
-        }
-
-        override fun onError(utteranceId: String?) {
-                Log.d("tts","sythesization error")
-
-        }
-
-        override fun onStart(utteranceId: String?) {
-                Log.d("tts","sythesization started")
-
-        }
-
+    fun stop(){
+        tts.stop()
     }
 
-    val allVoicesOfLang = MutableLiveData<Map<String,ArrayList<Voice>>>()
+
+
+
 
 
     //return all Voices
@@ -85,7 +74,7 @@ class TTS(
                 countryToItsVoicesMap[voice.locale.country] = arrayListOf(voice)
             }
         }
-        Log.d("voices",countryToItsVoicesMap.toString())
+
         return countryToItsVoicesMap
     }
 

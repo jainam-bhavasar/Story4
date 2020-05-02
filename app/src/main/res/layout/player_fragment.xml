@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@drawable/ic_app_background"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            style="@style/AppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:context=".player.PlayerFragment"
+            tools:visibility="visible">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:visibility="invisible"
+                    tools:visibility="visible"
+                    android:id="@+id/voiceChoosingLinearLayout"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        style="@style/voiceSettingsTextStyle"
+                        android:layout_height="wrap_content"
+                        android:text="@string/speed"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <include layout="@layout/seekbar_layout" android:id="@+id/speedSeekBar" />
+
+                    <TextView
+                        app:layout_constraintTop_toBottomOf="@id/speedSeekBar"
+                        android:layout_width="wrap_content"
+                        style="@style/voiceSettingsTextStyle"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/pitchTextView"
+                        android:text="@string/pitch"
+                        app:layout_constraintStart_toStartOf="parent"
+                        />
+
+                    <include
+                        android:id="@+id/pitchSeekBar"
+                        layout="@layout/seekbar_layout"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/accentConstraintLayout"
+                        app:layout_constraintTop_toBottomOf="@id/pitchTextView" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/accentConstraintLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/pitchSeekBar">
+
+                        <TextView
+                            android:id="@+id/textView"
+                            style="@style/voiceSettingsTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/accent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            app:layout_constraintBottom_toTopOf="@id/voiceListLinearLayout"
+                            android:id="@+id/countryChooserRecyclerView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@+id/textView"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:itemCount="3" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:id="@+id/voiceListLinearLayout"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:paddingTop="20dp"
+                        app:layout_constraintTop_toBottomOf="@id/accentConstraintLayout"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <TextView
+                            style="@style/voiceSettingsTextStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:contentDescription="@string/voices"
+                            android:paddingStart="0dp"
+                            android:paddingEnd="10dp"
+                            android:text="@string/voices" />
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/countryOnlineVoiceListRecyclerView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal"
+                            tools:itemCount="1"
+                            tools:listitem="@layout/voice_item"
+                            tools:orientation="horizontal" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/textCardViewPager"
+                    android:layout_width="320dp"
+                    tools:visibility="invisible"
+                    android:focusable="false"
+                    android:visibility="visible"
+                    android:layout_height="400dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/card_background" />
+
+            </FrameLayout>
+
+
+            <include
+                android:id="@+id/page_seek_bar_layout"
+                layout="@layout/seekbar_layout" />
+
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:padding="10dp"
+                    android:id="@+id/prevPageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/previous_page"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_back_page_icon" />
+
+                <ImageButton
+                    android:id="@+id/backward10secondsButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/rewind_10_seconds"
+                    android:padding="10dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@drawable/ic_10_seconds_backward_icon" />
+
+                <FrameLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/playPauseButton"
+                        android:layout_width="125dp"
+                        android:layout_height="125dp"
+                        android:visibility="invisible"
+                        android:background="@null"
+                        android:contentDescription="@string/play_or_pause"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_play_button" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBarPlayButton"
+                        android:layout_gravity="center"
+                        android:indeterminateDrawable="@drawable/progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </FrameLayout>
+
+
+                <ImageButton
+                    android:id="@+id/forward10Seconds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/forward_10_seconds"
+                    android:padding="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_10_seconds_forward_icon" />
+
+                <ImageButton
+                    android:id="@+id/nextPageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/next_page"
+                    android:elevation="10dp"
+                    android:padding="10dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_next_page_icon" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/voiceButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/ic_voice_icon"
+            android:contentDescription="@string/voice_settings"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</layout>

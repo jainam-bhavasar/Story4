@@ -10,10 +10,14 @@
                 <variable
                     name="clickListener"
                     type="com.jainam.story2.home.ThumbnailClickListener" />
+                <variable
+                    name="isSelected"
+                    type="Boolean" />
         </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
+            android:longClickable="true"
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginVertical="10dp"
@@ -21,24 +25,25 @@
             android:background="@drawable/ic_rectangle">
 
                 <TextView
-                    app:bookName="@{thumbnail}"
                     android:id="@+id/thumbnailTextView"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
+                    android:fontFamily="@font/inter_regular"
                     android:lines="1"
+                    android:scrollbars="vertical"
                     android:singleLine="true"
-                    tools:text="Alice in the Wonderland"
                     android:textColor="@color/colorPrimary"
-                    app:autoSizeMaxTextSize="14sp"
-                    app:autoSizeMinTextSize="8sp"
-                    app:autoSizeTextType="uniform"
+                    android:textSize="20sp"
+                    isSelected="@{isSelected}"
+                    app:bookName="@{thumbnail}"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/appCompatImageView2"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintStart_toEndOf="@+id/fileTypeImageView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Alice in the Wonderland" />
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/appCompatImageView2"
+                    android:id="@+id/fileTypeImageView"
                     android:layout_width="33dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="16dp"

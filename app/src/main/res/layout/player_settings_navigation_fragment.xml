@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".player.playerSettings.playerSettingsNavigation.PlayerSettingsNavigationFragment">
+
+        <FrameLayout
+            android:id="@+id/settingsViewFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/player_settings_navigation_fragment_rv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <include
+                android:id="@+id/navigateBySettingsLayout"
+                layout="@layout/naviigate_by_settings_layout"
+                android:layout_width="205dp"
+                android:layout_height="240dp"
+                app:layout_constraintBottom_toTopOf="@id/player_settings_navigation_fragment_rv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </FrameLayout>
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/player_settings_navigation_fragment_rv"
+            android:layout_width="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/settingsViewFrameLayout"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/homeHorizontalMargin"
+            app:layout_constraintBottom_toTopOf="@id/backButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:itemCount="3"
+            tools:listitem="@layout/player_settings_navigation_fragment_item" />
+
+        <ImageButton
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/go_back"
+            android:src="@drawable/ic_cancel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintStart_toStartOf="parent"
+           />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

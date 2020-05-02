@@ -22,14 +22,14 @@
             android:contentDescription="@string/add_new_files"
             android:focusable="true"
             android:src="@drawable/ic_add_icon"
-            app:backgroundTint="@color/colorPrimary"
+            app:backgroundTint="@color/white"
             app:elevation="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="#FFFFFF" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:id="@+id/thumbnails_recycler_view"
             android:layout_marginHorizontal="@dimen/homeHorizontalMargin"
             android:layout_width="match_parent"
@@ -42,6 +42,7 @@
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:paddingVertical="16dp"
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,17 +51,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
+            <ImageView
                 android:id="@+id/textView3"
                 style="@android:style/Widget.DeviceDefault.Light.TextView"
-                android:layout_width="131dp"
-                android:layout_height="65dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/homeHorizontalMargin"
+                android:src="@drawable/ic_home_text"
                 android:layout_marginTop="16dp"
                 android:fontFamily="serif"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:text="@string/home"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorPrimary"
                 android:textIsSelectable="true"
@@ -68,11 +69,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/searchButton"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="26dp"
+                android:layerType="software"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="@dimen/homeHorizontalMargin"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/search_for_a_book"
@@ -81,14 +83,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_marginHorizontal="@dimen/homeHorizontalMargin"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:src="@drawable/line"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -1,30 +1,34 @@
 package com.jainam.story2.home
 
 import android.app.Activity.RESULT_OK
-import android.app.Application
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
-import android.view.KeyEvent
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jainam.story2.R
+import androidx.recyclerview.widget.RecyclerView
 import com.jainam.story2.database.BookDatabase
+import com.jainam.story2.database.Thumbnail
 import com.jainam.story2.databinding.HomeFragmentBinding
-import com.jainam.story2.player.MyPlayerFragment
 import com.jainam.story2.utils.GetLang
-import kotlinx.coroutines.coroutineScope
+import com.pixplicity.sharp.Sharp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 
 
 const val PICK_PDF_REQUEST = 1 // The request code.
@@ -38,63 +42,86 @@ class HomeFragment : Fragment(),GetLang{
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+        ): View? {
 
 
-        //setting binding
-        val binding = HomeFragmentBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = this
-        val application = requireNotNull(this.activity).application
-        val fragment = this
+            //setting binding
+            val binding = HomeFragmentBinding.inflate(inflater, container, false)
+            binding.lifecycleOwner = this
+            val application = requireNotNull(this.activity).application
+            val fragment = this
 
-        //setting view model
-
-
+            //setting view model
 
 
-        lifecycleScope.launch {
-            val dataSource = BookDatabase.getInstance(application).thumbnailDatabaseDao
-            val viewModelFactory = HomeViewModelFactory(dataSource, application)
-            viewModel = ViewModelProviders.of(fragment, viewModelFactory).get(HomeViewModel::class.java)
-            //  setting the recycler view
-            val thumbnailViewAdapter :ThumbnailViewAdapter= ThumbnailViewAdapter( ThumbnailClickListener {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToMyPlayerFragment(it))
-            })
-            binding.thumbnailsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-            binding.thumbnailsRecyclerView.adapter = thumbnailViewAdapter
 
-            viewModel.thumbnails.observe(viewLifecycleOwner, Observer {
 
-                it?.let {
-                    thumbnailViewAdapter.submitList(it)
+
+            lifecycleScope.launch {
+                val dataSource = BookDatabase.getInstance(application).thumbnailDatabaseDao
+                val viewModelFactory = HomeViewModelFactory(dataSource, application)
+                viewModel = ViewModelProvider(fragment, viewModelFactory).get(HomeViewModel::class.java)
+                //  setting the recycler view
+                val thumbnailViewAdapter :ThumbnailViewAdapter= ThumbnailViewAdapter( ThumbnailClickListener {
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToMyPlayerFragment(it))
+                })
+
+                binding.thumbnailsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+                binding.thumbnailsRecyclerView.adapter = thumbnailViewAdapter
+
+              thumbnailViewAdapter.setOnItemClickListener(object :ThumbnailViewAdapter.OnClickListener{
+
+                  override fun onItemLongClick(position: Int, v: View?) {
+                      val alertDialog: AlertDialog? = activity?.let {
+                          val builder = AlertDialog.Builder(it)
+                          builder.setTitle("Delete?")
+                          builder.apply {
+                              setPositiveButton("Ok",
+                                  DialogInterface.OnClickListener { dialog, id ->
+                                     viewModel.delete(thumbnail = thumbnailViewAdapter.currentList[position])
+
+                                  })
+                              setNegativeButton("Cancel",
+                                  DialogInterface.OnClickListener { dialog, id ->
+
+                                  })
+                          }
+
+                          // Create the AlertDialog
+                          builder.create()
+                      }
+                      alertDialog!!.show()
+
+                  }
+
+              })
+
+                viewModel.thumbnails.observe(viewLifecycleOwner, Observer {
+
+                    it?.let {
+
+                        thumbnailViewAdapter.submitList(it)
+                    }
+
+                })
+
+
+
+
+                binding.addButton.setOnClickListener {
+
+                    val intent = viewModel.pickPdfIntent()
+                    startActivityForResult(intent, PICK_PDF_REQUEST)
+
                 }
 
-            })
+                binding.searchButton.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToSearchFragment()) }
 
-
-
-            // viewModel.deleteAll()
-            //setting fab for testing
-            binding.addButton.setOnClickListener {
-                //  viewModel.score.postValue(viewModel.score.value+1)
-                // viewModel.insert(Book1(uriAsString = " "))
-                //navigating to player fragment
-
-
-                val intent = viewModel.pickPdfIntent()
-                startActivityForResult(intent, PICK_PDF_REQUEST)
-
-                //  findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToVoiceSelectionMenuFragment())
 
             }
 
-            binding.searchButton.setOnClickListener { findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToSearchFragment()) }
-
-
+            return binding.root
         }
-
-        return binding.root
-    }
 
 
 
@@ -111,7 +138,6 @@ class HomeFragment : Fragment(),GetLang{
 
                 val uriAsString = uri.toString()
                 try {
-
                     viewModel.insert(uri!!)
                 }catch (e:Exception){
 

@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:paddingStart="5dp"
-    android:paddingEnd="5dp">
+    android:paddingEnd="5dp"
+    android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/countryBackground"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/pressed_country_background"
+       />
+    <ImageView
+        android:id="@+id/countryIcon"
+        android:layout_width="30dp"
+        android:layout_gravity="center"
+        android:layout_height="30dp"
+        android:contentDescription="TODO" />
 
-    <TextView
-        android:id="@+id/countryChooserRecyclerViewItemName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+</FrameLayout>
+

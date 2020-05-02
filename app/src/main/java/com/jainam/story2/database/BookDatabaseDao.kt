@@ -19,8 +19,6 @@ interface BookDatabaseDao
     @Query("SELECT * FROM Book1 WHERE uriAsString = :uriString")
     suspend fun get(uriString:String):Book1
 
-//    @Query("SELECT * FROM Book1 ORDER BY bookID DESC")
-//    fun getAllThumbnails():LiveData<List<Book1>>
 
     @Query("SELECT bookID,bookName,uriAsString FROM Book1 ORDER BY bookID DESC")
     fun getAllThumbnails():LiveData<List<Thumbnail>>
@@ -30,6 +28,8 @@ interface BookDatabaseDao
 
     @Query("DELETE FROM Book1")
     fun deleteAll()
+
+
 
 
 

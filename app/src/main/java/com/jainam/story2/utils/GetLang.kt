@@ -7,7 +7,6 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 
-const val TAG: String = "lang"
 
 interface GetLang {
 

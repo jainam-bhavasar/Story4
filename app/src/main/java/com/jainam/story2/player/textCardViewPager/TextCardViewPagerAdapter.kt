@@ -12,7 +12,7 @@ import com.jainam.story2.R
 import kotlinx.android.synthetic.main.player_view_text_card_layout.view.*
 import kotlin.math.abs
 
-class TextCardViewPagerAdapter : ListAdapter<String,TextCardViewPagerAdapter.ViewHolder>(TextCardDiffUtilCallback()) {
+class TextCardViewPagerAdapter(var data:List<String>) : RecyclerView.Adapter<TextCardViewPagerAdapter.ViewHolder>() {
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
            val textView:TextView = itemView.cardText
     }
@@ -26,21 +26,13 @@ class TextCardViewPagerAdapter : ListAdapter<String,TextCardViewPagerAdapter.Vie
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.textView.text = getItem(position)
+        holder.textView.text = data[position]
     }
+
+    override fun getItemCount(): Int  = data.size
 
 }
 
-class TextCardDiffUtilCallback:DiffUtil.ItemCallback<String>(){
-    override fun areItemsTheSame(oldItem: String, newItem: String): Boolean {
-        return oldItem == newItem
-    }
-
-    override fun areContentsTheSame(oldItem: String, newItem: String): Boolean {
-        return oldItem == newItem
-    }
-
-}
 
 
 
@@ -66,7 +58,7 @@ class DepthPageTransformer : ViewPager2.PageTransformer {
                 }
                 position <= 1 -> { // (0,1]
                     // Fade the page out.
-                    alpha = 1 - position
+                    alpha = 1f
 
                     // Counteract the default slide transition
                     translationX = pageWidth * -position

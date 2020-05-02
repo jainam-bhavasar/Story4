@@ -65,6 +65,7 @@ class LoginFragment : Fragment() {
         auth = FirebaseAuth.getInstance()
 
         sign_in_button.setOnClickListener{
+            sign_in_button.setImageResource(R.drawable.google_login_pressed_button)
             signIn()
         }
 
@@ -72,6 +73,7 @@ class LoginFragment : Fragment() {
     }
     private fun signIn() {
         val signInIntent: Intent = mGoogleSignInClient.signInIntent
+
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -82,6 +84,9 @@ class LoginFragment : Fragment() {
             // The Task returned from this call is always completed, no need to attach
             // a listener.
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
+            progressBar.visibility = View.VISIBLE
+            sign_in_button.visibility = View.INVISIBLE
+            appLogoImage.visibility = View.INVISIBLE
 
 
             handleSignInResult(task)
@@ -129,6 +134,7 @@ class LoginFragment : Fragment() {
            // val intent = Intent(applicationContext, MainActivity::class.java)
           //  finish()
            // startActivity(intent)
+            progressBar.visibility = View.INVISIBLE
             findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment2())
         }else{
             Log.d("SIGN","Sign in not successful")

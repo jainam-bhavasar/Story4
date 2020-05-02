@@ -40,7 +40,8 @@ class GetText(val type: Type, private val inputStream: InputStream):GetLang {
         //getting sample text
         var sampleText = ""
         var pageNum = 1
-        while (sampleText.length <1000){
+        val totalPages = getTotalPages()
+        while ((sampleText.length <1000) and (pageNum < getTotalPages())){
             sampleText+=getTextAtPage(pageNum)
             pageNum++
         }

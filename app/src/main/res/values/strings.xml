@@ -1,16 +1,15 @@
 <resources>
     <string name="app_name">Story2</string>
-    <string name="hello">hello</string>
-    <string name="add_new_files">Add new files</string>
-    <string name="book_name">Book name</string>
+    <string name="hello" translatable="false">hello</string>
+    <string name="add_new_files" >Add new files</string>
+    <string name="book_name" translatable="false">Book name</string>
 
     <string name="facebook_app_id">619775151908562</string>
     <string name="fb_login_protocol_scheme">fb619775151908562</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_for_a_book">Search for a book</string>
-    <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_login" translatable="false">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -24,8 +23,27 @@
     <string name="play">play or pause</string>
     <string name="play_or_pause">play or pause</string>
     <string name="page_number_change_slider">page number change slider</string>
-    <string name="home">Home</string>
+    <string name="home"> Home</string>
     <string name="search">Search</string>
     <string name="search_hint">Search</string>
     <string name="search_logo">search logo</string>
+    <string name="open_menu">open menu to change voice settings or to translate or other settings</string>
+    <string name="go_to_this_setting_s_page">Go to this setting\'s page</string>
+    <string name="go_back">go back</string>
+    <string name="navigate_by">Navigate by️</string>
+    <string name="speed">Speed</string>
+    <string name="accent">Accent</string>
+    <string name="google_sign_in">Google sign in</string>
+    <string name="app_icon">App icon</string>
+    <string name="forward_10_seconds">forward 10 seconds</string>
+    <string name="next_page">next page</string>
+    <string name="male_voice_button">male voice </string>
+    <string name="female_voice">female Voice</string>
+    <string name="voice_pitch_change_slider">Voice Pitch change slider</string>
+    <string name="voice_speed_change_slider">Voice speed change slider</string>
+    <string name="gender">Gender</string>
+    <string name="voices">VOICES</string>
+    <string name="pitch">Pitch</string>
+    <string name="voice_settings">voice Settings</string>
+    <string name="offline_voice">Offline voice</string>
 </resources>

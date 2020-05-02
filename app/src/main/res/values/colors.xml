@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#590202</color>
-    <color name="colorSecondarySubtle">#B79765</color>
+    <color name="colorPrimary">#02105C</color>
+    <color name="colorSecondarySubtle">#F8F8FC</color>
     <color name="colorSecondarySubtler">#EEE5DA</color>
     <color name="WHITE">#ffffff</color>
     <color name="white">#ffffff</color>
