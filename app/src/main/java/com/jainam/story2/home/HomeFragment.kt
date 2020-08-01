@@ -2,42 +2,33 @@ package com.jainam.story2.home
 
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.jainam.story2.database.BookDatabase
-import com.jainam.story2.database.Thumbnail
 import com.jainam.story2.databinding.HomeFragmentBinding
 import com.jainam.story2.utils.GetLang
-import com.pixplicity.sharp.Sharp
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
 const val PICK_PDF_REQUEST = 1 // The request code.
-const val OPEN_PDF = 2
 @Suppress("NAME_SHADOWING")
+
 class HomeFragment : Fragment(),GetLang{
 
     private lateinit var viewModel: HomeViewModel
-
+    private val pbInsertThumbnailVisibility  = MutableLiveData(View.INVISIBLE)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,8 +53,9 @@ class HomeFragment : Fragment(),GetLang{
                 val viewModelFactory = HomeViewModelFactory(dataSource, application)
                 viewModel = ViewModelProvider(fragment, viewModelFactory).get(HomeViewModel::class.java)
                 //  setting the recycler view
-                val thumbnailViewAdapter :ThumbnailViewAdapter= ThumbnailViewAdapter( ThumbnailClickListener {
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToMyPlayerFragment(it))
+                val thumbnailViewAdapter = ThumbnailViewAdapter( ThumbnailClickListener {
+
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToPlayerGraph(it.uriAsString,it.lastPage,it.lastPosition,it.language,it.bookLength))
                 })
 
                 binding.thumbnailsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -76,15 +68,15 @@ class HomeFragment : Fragment(),GetLang{
                           val builder = AlertDialog.Builder(it)
                           builder.setTitle("Delete?")
                           builder.apply {
-                              setPositiveButton("Ok",
-                                  DialogInterface.OnClickListener { dialog, id ->
-                                     viewModel.delete(thumbnail = thumbnailViewAdapter.currentList[position])
+                              setPositiveButton("Ok"
+                              ) { _, _ ->
+                                  viewModel.delete(thumbnail = thumbnailViewAdapter.currentList[position])
 
-                                  })
-                              setNegativeButton("Cancel",
-                                  DialogInterface.OnClickListener { dialog, id ->
+                              }
+                              setNegativeButton("Cancel"
+                              ) { _, _ ->
 
-                                  })
+                              }
                           }
 
                           // Create the AlertDialog
@@ -97,15 +89,24 @@ class HomeFragment : Fragment(),GetLang{
               })
 
                 viewModel.thumbnails.observe(viewLifecycleOwner, Observer {
-
+                    
                     it?.let {
-
                         thumbnailViewAdapter.submitList(it)
+                        pbInsertThumbnailVisibility.postValue(View.INVISIBLE)
+
+                        if (it.isEmpty()) {
+                            binding.tvAddFiles.visibility = View.VISIBLE
+                        }else{
+                            binding.tvAddFiles.visibility = View.INVISIBLE
+                        }
+
                     }
 
                 })
 
-
+                pbInsertThumbnailVisibility.observe(viewLifecycleOwner, Observer {
+                        binding.pbThumbnailInsert.visibility = it
+                })
 
 
                 binding.addButton.setOnClickListener {
@@ -136,9 +137,10 @@ class HomeFragment : Fragment(),GetLang{
 
                 //initiating view model
 
-                val uriAsString = uri.toString()
+                pbInsertThumbnailVisibility.postValue(View.VISIBLE)
                 try {
                     viewModel.insert(uri!!)
+                    viewModel.uriToFileInInternalStorage(uri)
                 }catch (e:Exception){
 
                 }

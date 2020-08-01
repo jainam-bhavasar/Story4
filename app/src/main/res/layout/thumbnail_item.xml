@@ -13,6 +13,7 @@
                 <variable
                     name="isSelected"
                     type="Boolean" />
+
         </data>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -47,7 +48,8 @@
                     android:layout_width="33dp"
                     android:layout_height="50dp"
                     android:layout_marginStart="16dp"
-                    android:src="@drawable/ic_pdf"
+                    typeImage="@{thumbnail.type}"
+                    tools:src="@drawable/ic_pdf"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />

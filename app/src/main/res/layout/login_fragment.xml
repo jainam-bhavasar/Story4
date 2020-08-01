@@ -10,14 +10,15 @@
 
     <ImageView
         android:id="@+id/appLogoImage"
-        android:layout_marginTop="100dp"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
+        android:layout_marginHorizontal="100dp"
+        android:contentDescription="@string/app_icon"
+        app:layout_constraintBottom_toTopOf="@+id/sign_in_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/app_logo_big_image"
-        android:contentDescription="@string/app_icon" />
+        app:srcCompat="@drawable/app_logo_big_image" />
     <ImageView
         android:id="@+id/sign_in_button"
         android:layout_width="wrap_content"
@@ -25,7 +26,8 @@
         android:paddingHorizontal="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-       android:layout_marginBottom="60dp"
+        android:layout_marginBottom="60dp"
+        android:visibility="gone"
         android:src="@drawable/google_login_button_image"
         app:layout_constraintBottom_toBottomOf="parent"
         android:contentDescription="@string/google_sign_in" />

@@ -1,13 +1,12 @@
 <resources>
     <string name="app_name">Story2</string>
     <string name="hello" translatable="false">hello</string>
-    <string name="add_new_files" >Add new files</string>
+    <string name="add_new_files">Add new files</string>
     <string name="book_name" translatable="false">Book name</string>
 
     <string name="facebook_app_id">619775151908562</string>
     <string name="fb_login_protocol_scheme">fb619775151908562</string>
 
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_for_a_book">Search for a book</string>
     <string name="title_activity_login" translatable="false">Sign in</string>
     <string name="prompt_email">Email</string>
@@ -26,8 +25,8 @@
     <string name="home"> Home</string>
     <string name="search">Search</string>
     <string name="search_hint">Search</string>
-    <string name="search_logo">search logo</string>
-    <string name="open_menu">open menu to change voice settings or to translate or other settings</string>
+    <string name="search_logo">Search</string>
+    <string name="open_menu">open menu to change voice settings </string>
     <string name="go_to_this_setting_s_page">Go to this setting\'s page</string>
     <string name="go_back">go back</string>
     <string name="navigate_by">Navigate by️</string>
@@ -46,4 +45,18 @@
     <string name="pitch">Pitch</string>
     <string name="voice_settings">voice Settings</string>
     <string name="offline_voice">Offline voice</string>
+    <string name="volume">VOLUME</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="done">Done</string>
+    <string name="stop">STOP</string>
+    <string name="background_music">background music</string>
+    <string name="pagenumber_and_booklength_seperator">/</string>
+    <string name="_1">Page 1 of 1</string>
+    <string name="add_pdf_and_epub_documents">Add Pdf and ePubs  here</string>
+    <string name="install_google_tts_engine">Install Google Text-to-speech engine to get amazing voices for free!</string>
+    <string name="install">Install</string>
+    <string name="install_google_text_to_speech_from_play_store">Install Google text to speech from play store</string>
+    <string name="google_text_to_speech_image">Google text to speech image</string>
 </resources>

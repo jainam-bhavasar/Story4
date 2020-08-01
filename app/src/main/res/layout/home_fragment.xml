@@ -3,8 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_pdf_and_epub_documents"
+        android:layout_gravity="center"
+        android:visibility="invisible"
+        android:textSize="25sp"
+        android:textAlignment="center"
+        android:id="@+id/tvAddFiles"
+        android:fontFamily="@font/inter_regular"
+        android:textColor="#97989A"
+        />
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,24 +35,23 @@
             android:contentDescription="@string/add_new_files"
             android:focusable="true"
             android:src="@drawable/ic_add_icon"
-            app:backgroundTint="@color/white"
+            app:backgroundTint="@color/colorPrimary"
             app:elevation="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:rippleColor="#FFFFFF" />
 
+
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_marginBottom="10dp"
             android:id="@+id/thumbnails_recycler_view"
-            android:layout_marginHorizontal="@dimen/homeHorizontalMargin"
             android:layout_width="match_parent"
-            tools:listitem="@layout/thumbnail_item"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/homeHorizontalMargin"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.087"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            />
-
+            tools:listitem="@layout/thumbnail_item" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:paddingVertical="16dp"
@@ -54,13 +66,14 @@
             <ImageView
                 android:id="@+id/textView3"
                 style="@android:style/Widget.DeviceDefault.Light.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_marginStart="@dimen/homeHorizontalMargin"
-                android:src="@drawable/ic_home_text"
                 android:layout_marginTop="16dp"
                 android:fontFamily="serif"
                 android:maxLines="1"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_home"
                 android:singleLine="true"
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorPrimary"
@@ -86,6 +99,17 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <ProgressBar
+            android:id="@+id/pbThumbnailInsert"
+            android:indeterminateDrawable="@drawable/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
 </layout>

@@ -6,4 +6,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="homeHorizontalMargin">40dp</dimen>
+    <dimen name="playerViewMargin">20dp</dimen>
 </resources>

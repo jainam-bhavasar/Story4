@@ -2,11 +2,13 @@ package com.jainam.story2.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.speech.tts.TextToSpeech
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -17,6 +19,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.itextpdf.kernel.pdf.filters.IFilterHandler
 
 import com.jainam.story2.R
 import kotlinx.android.synthetic.main.login_fragment.*
@@ -30,6 +33,9 @@ class LoginFragment : Fragment() {
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
+    private lateinit var tts: TextToSpeech
+
+    //private val textToSpeech = TextToSpeech(context,listener,"com.google.tts")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -98,7 +104,6 @@ class LoginFragment : Fragment() {
             val account =
                 completedTask.getResult(ApiException::class.java)
 
-            Log.d("SIGN","Sign in successfull")
             firebaseAuthWithGoogle(account!!)
             // Signed in successfully, show authenticated UI.
 
@@ -110,14 +115,12 @@ class LoginFragment : Fragment() {
         }
     }
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount) {
-        Log.d("SIGN", "firebaseAuthWithGoogle:" + acct.id!!)
 
         val credential = GoogleAuthProvider.getCredential(acct.idToken, null)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(requireActivity()) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Log.d("SIGN", "signInWithCredential:success")
                     val user = auth.currentUser
                     updateUI(user)
                 } else {
@@ -128,17 +131,36 @@ class LoginFragment : Fragment() {
 
             }
     }
+    private fun onInitListener() : TextToSpeech.OnInitListener {
+
+        return TextToSpeech.OnInitListener {status ->
+            if (status == TextToSpeech.SUCCESS){
+                if (isGoogleTTSPresent()){
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment2())
+                }else{
+                    findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToGoogleTTSFragment())
+                }
+            }
+        }
+
+    }
+
+    private fun isGoogleTTSPresent(): Boolean {
+        var found = false
+        for (engineInfo in tts.engines) {
+            if (engineInfo.name == "com.google.android.tts") {
+                found = true
+            }
+        }
+        return found
+    }
+
     private fun updateUI(user: FirebaseUser?) {
         if (user!= null){
-            Log.d("SIGN","Sign in successful")
-           // val intent = Intent(applicationContext, MainActivity::class.java)
-          //  finish()
-           // startActivity(intent)
             progressBar.visibility = View.INVISIBLE
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment2())
+            tts = TextToSpeech(context, onInitListener())
         }else{
-            Log.d("SIGN","Sign in not successful")
-
+            sign_in_button.visibility = View.VISIBLE
         }
     }
 }

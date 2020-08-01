@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        tools:context=".player.PlayerFragment2">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/textCardViewPager"
+            android:layout_width="320dp"
+            android:layout_height="400dp"
+            android:layout_gravity="center"
+            android:background="@drawable/card_background"
+            android:focusable="false"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/page_seek_bar_layout"
+        layout="@layout/seekbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/playerViewMargin"
+        app:layout_constraintBottom_toTopOf="@id/playButtonFrameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:gravity="center"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <ImageButton
+        android:id="@+id/prevPageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/previous_page"
+        android:padding="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_back_page_icon"
+        app:layout_constraintEnd_toStartOf="@id/backward10secondsButton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/page_seek_bar_layout" />
+
+    <ImageButton
+        android:id="@+id/backward10secondsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/rewind_10_seconds"
+        android:padding="10dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/prevPageButton"
+        app:layout_constraintTop_toBottomOf="@+id/page_seek_bar_layout"
+        app:layout_constraintEnd_toStartOf="@id/playButtonFrameLayout"
+        app:srcCompat="@drawable/ic_10_seconds_backward_icon" />
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/playButtonFrameLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/forward10Seconds"
+        app:layout_constraintStart_toEndOf="@id/backward10secondsButton"
+        app:layout_constraintTop_toBottomOf="@id/page_seek_bar_layout">
+
+        <ImageView
+            android:id="@+id/playPauseButton"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:background="@null"
+            android:contentDescription="@string/play_or_pause"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_play_button"
+            android:visibility="invisible" />
+
+        <ProgressBar
+            android:id="@+id/progressBarPlayButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/progress" />
+    </FrameLayout>
+    <ImageButton
+        android:id="@+id/forward10Seconds"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/forward_10_seconds"
+        android:padding="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_10_seconds_forward_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextPageButton"
+        app:layout_constraintStart_toEndOf="@id/playButtonFrameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/page_seek_bar_layout" />
+
+    <ImageButton
+        android:id="@+id/nextPageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/next_page"
+        android:elevation="10dp"
+        android:padding="10dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_next_page_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/forward10Seconds"
+        app:layout_constraintTop_toBottomOf="@+id/page_seek_bar_layout" />
+</LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+
+
+
+
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

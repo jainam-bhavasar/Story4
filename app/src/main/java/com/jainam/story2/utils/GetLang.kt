@@ -1,9 +1,6 @@
 package com.jainam.story2.utils
 
-import android.util.Log
 import com.google.firebase.ml.naturallanguage.FirebaseNaturalLanguage
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 

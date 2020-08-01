@@ -3,7 +3,6 @@ package com.jainam.story2.home
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +14,6 @@ class ThumbnailViewAdapter(private val clickListener: ThumbnailClickListener) : 
     lateinit var onClickListenerVariable:OnClickListener
 
    inner class ViewHolder(val binding: ThumbnailItemBinding) : RecyclerView.ViewHolder(binding.root) , View.OnLongClickListener{
-        val bookName: TextView = binding.thumbnailTextView
         override fun onLongClick(v: View?): Boolean {
            onClickListenerVariable.onItemLongClick(adapterPosition,v)
            return true
@@ -50,12 +48,12 @@ class ThumbnailViewAdapter(private val clickListener: ThumbnailClickListener) : 
         fun onItemLongClick(position: Int, v: View?)
     }
 }
-class ThumbnailClickListener(val clickListener: (uriAsString:String) ->Unit){
-    fun onClick(thumbnail: Thumbnail) = clickListener(thumbnail.uriAsString)
+class ThumbnailClickListener(val clickListener: (Thumbnail) ->Unit){
+    fun onClick(thumbnail: Thumbnail) = clickListener(thumbnail)
 }
 object ThumbnailDiffUtilCallback:DiffUtil.ItemCallback<Thumbnail>(){
     override fun areItemsTheSame(oldItem: Thumbnail, newItem: Thumbnail): Boolean {
-        return oldItem.bookID==newItem.bookID
+        return oldItem.thumbnailID==newItem.thumbnailID
     }
 
     override fun areContentsTheSame(oldItem: Thumbnail, newItem: Thumbnail): Boolean {

@@ -15,6 +15,7 @@
         tools:context=".bookSearch.SearchFragment">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_marginTop="@dimen/playerViewMargin"
             android:id="@+id/searchBarLinearLayout"
             android:layout_width="match_parent"
             android:layout_marginHorizontal="@dimen/homeHorizontalMargin"
@@ -26,6 +27,7 @@
             <EditText
                 android:id="@+id/searchEditText"
                 style="@android:style/Widget.Material.EditText"
+
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
                 android:layout_marginStart="10dp"
@@ -35,6 +37,7 @@
                 android:ems="9"
                 android:hint="@string/search_hint"
                 android:inputType="textVisiblePassword"
+                android:imeOptions="actionSearch"
                 android:outlineProvider="paddedBounds"
                 android:textAlignment="inherit"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -49,13 +52,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="LabelFor" />
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <ImageButton
+                android:id="@+id/btn_search"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="@string/search_logo"
-                android:src="@drawable/ic_search_black"
+                android:background="@drawable/ic_search_black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

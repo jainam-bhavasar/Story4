@@ -1,39 +1,38 @@
 package com.jainam.story2.database
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.*
+import com.jainam.story2.utils.MyVoice
 
 @Dao
 interface BookDatabaseDao
 {
+
+
     @Insert
-    fun insert(book1: Book1)
+    fun insert(thumbnail: Thumbnail)
 
     @Delete
-    fun delete(book1: Book1)
+    fun delete(thumbnail: Thumbnail)
 
     @Update
-    fun update(book1: Book1)
+    fun update(thumbnail: Thumbnail)
 
-    @Query("SELECT * FROM Book1 WHERE uriAsString = :uriString")
-    suspend fun get(uriString:String):Book1
+    @Query("SELECT * FROM Thumbnail WHERE uriAsString = :uriString")
+    suspend fun get(uriString:String):Thumbnail
 
 
-    @Query("SELECT bookID,bookName,uriAsString FROM Book1 ORDER BY bookID DESC")
+    @Query("SELECT * FROM Thumbnail ORDER BY thumbnailID DESC")
     fun getAllThumbnails():LiveData<List<Thumbnail>>
 
-    @Query("SELECT bookID,bookName,uriAsString FROM Book1 ORDER BY bookID DESC")
-    fun getAllThumbnailsWithoutLiveData():List<Thumbnail>
+    @Query("SELECT * FROM MyVoice WHERE language = :language")
+    fun getVoiceOfLang(language:String):MyVoice?
 
-    @Query("DELETE FROM Book1")
-    fun deleteAll()
+    @Update
+    fun updateMyVoice(myVoice: MyVoice)
 
+    @Insert
+    fun insertMyVoice(myVoice: MyVoice)
 
-
-
-
-//    @Query("SELECT type FROM Book1 WHERE uriAsString =:uriString")
-//    fun getType(uriString: String):String
 
 }

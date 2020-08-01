@@ -1,2 +1,7 @@
+include ':itext-kernel-7.1.10'
+include ':itext-io-7.1.10'
+include ':slf4j-android-1.6.1-RC1'
+include ':epublib-core-latest'
+include ':Sharp'
 include ':app'
 rootProject.name='Story2'

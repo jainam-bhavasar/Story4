@@ -4,11 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.jainam.story2.utils.ExtensionTypeConverters
+import com.jainam.story2.utils.MyVoice
 
-@Database(entities = [Book1::class],version = 1,exportSchema = false)
-@TypeConverters(ExtensionTypeConverters::class)
+@Database(entities = [Thumbnail::class,MyVoice::class],version = 1,exportSchema = false)
 abstract class BookDatabase :RoomDatabase(){
     abstract val thumbnailDatabaseDao:BookDatabaseDao
 

@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'com.google.gms.google-services'
 
+
 apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
@@ -11,6 +12,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'androidx.navigation.safeargs'
 
 apply plugin: 'kotlinx-serialization'
+
+apply plugin: 'com.google.firebase.crashlytics'
+
 
 android {
     compileSdkVersion 29
@@ -35,16 +39,20 @@ android {
                 arg("room.expandProjection", "true")
             }
         }
-        dataBinding {
-            enabled = true
-        }
+
+    }
+    buildFeatures{
+        dataBinding = true
+
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -61,11 +69,16 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(path: ':Sharp')
+    implementation project(path: ':epublib-core-latest')
+    implementation project(path: ':slf4j-android-1.6.1-RC1')
+    implementation project(path: ':itext-io-7.1.10')
+    implementation project(path: ':itext-kernel-7.1.10')
     def lifecycle_version = "2.2.0"
     def arch_version = "2.1.0"
     def activity_version = "1.1.0"
 
-    def nav_version = "2.3.0-alpha05"
+    def nav_version = "2.3.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
@@ -73,6 +86,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.annotation:annotation:1.1.0'
+    implementation 'com.google.firebase:firebase-analytics:17.4.3'
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
 
@@ -89,58 +103,39 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
 
-    //tesseract
-    // implementation 'com.rmtheis:tess-two:9.0.0'
-    //implementation 'cz.adaptech.android:tesseract4android:2.1.0'
 
-    //e-pub
-    implementation files('libs/epublib-core-latest')
-    implementation files('libs/slf4j-android-1.6.1-RC1')
-
-
-    //pdf
-    implementation files('libs/itext-io-7.1.10')
-    implementation files('libs/itext-kernel-7.1.10')
-
-
-    //ocr text scanning
-    implementation 'com.google.firebase:firebase-ml-vision:24.0.1'
 
 
     //detecting the language
     implementation 'com.google.firebase:firebase-ml-natural-language:22.0.0'
     implementation 'com.google.firebase:firebase-ml-natural-language-language-id-model:20.0.7'
 
+    //crash-analytics
+    // the Firebase SDK for Google Analytics.
+    implementation 'com.google.firebase:firebase-analytics-ktx:17.4.3'
+    //  the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
 
-    //firebase analytics
-    implementation 'com.google.firebase:firebase-analytics:17.3.0'
+    //  the firebase dependency for the Performance Monitoring library
+    implementation 'com.google.firebase:firebase-perf:19.0.7'
+
 
     //Robolectric environment
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation "org.robolectric:robolectric:4.0.2"
 
-    //  Mockito framework
-    // testImplementation 'org.mockito:mockito-core:1.10.19'
 
-    //kotlin serialisable
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:0.20.0"
 
     //google sign in + firebase
-    implementation 'com.google.firebase:firebase-auth:19.3.0'
+    implementation 'com.google.firebase:firebase-auth:19.3.1'
     implementation 'com.google.android.gms:play-services-auth:18.0.0'
 
     //viewPager2
     implementation "androidx.viewpager2:viewpager2:1.0.0"
 
-    //emoji support
-
-
-    //svg android
-    implementation 'com.pixplicity.sharp:library:1.1.3@aar'
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.2.0'
+    implementation 'androidx.core:core-ktx:1.3.0'
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'

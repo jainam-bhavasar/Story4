@@ -10,39 +10,32 @@
         android:label="home_fragment"
         tools:layout="@layout/home_fragment" >
         <action
-            android:id="@+id/action_homeFragment2_to_myPlayerFragment"
-            app:destination="@id/myPlayerFragment"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:exitAnim="@anim/fragment_close_exit"
-            app:popEnterAnim="@anim/fragment_open_enter"
-            app:popUpTo="@id/homeFragment2" />
-        <action
             android:id="@+id/action_homeFragment2_to_searchFragment"
             app:destination="@id/searchFragment"
             app:enterAnim="@anim/fragment_close_enter"
             app:popEnterAnim="@anim/fragment_close_enter" />
-    </fragment>
-    <fragment
-        android:id="@+id/myPlayerFragment"
-        android:name="com.jainam.story2.player.PlayerFragment"
-        android:label="MyPlayerFragment" >
-        <argument
-            android:name="uriString"
-            app:argType="string" />
         <action
-            android:id="@+id/action_myPlayerFragment_to_playerSettingsNavigationFragment"
-            app:destination="@id/playerSettingsNavigationFragment"
-            app:enterAnim="@anim/fragment_close_enter"
-            app:popEnterAnim="@anim/fragment_close_enter" />
-        <action
-            android:id="@+id/action_myPlayerFragment_to_voiceListFragmentModelBottomSheet"
-            app:destination="@id/voiceListFragmentModelBottomSheet" />
+            android:id="@+id/action_homeFragment2_to_playerGraph"
+            app:destination="@id/playerGraph"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popEnterAnim="@anim/fragment_close_enter" >
+            <argument
+                android:name="uriAsString"
+                app:argType="string"/>
+            <argument
+                android:name="lastPage"
+                app:argType="integer" />
+            <argument
+                android:name="lastPosition"
+                app:argType="integer" />
+            <argument
+                android:name="language"
+                app:argType="string" />
+            <argument
+                android:name="bookLength"
+                app:argType="integer"/>
+        </action>
     </fragment>
-    <fragment
-        android:id="@+id/voiceSelectionMenuFragment"
-        android:name="com.jainam.story2.player.voiceSeclection.VoiceSelectionMenuFragment"
-        android:label="voice_selection_menu_fragment"
-        tools:layout="@layout/voice_selection_menu_fragment" />
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.jainam.story2.auth.LoginFragment"
@@ -55,22 +48,97 @@
             app:popEnterAnim="@anim/fragment_open_enter"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_loginFragment_to_googleTTSFragment"
+            app:destination="@id/googleTTSFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popEnterAnim="@anim/fragment_close_enter" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.jainam.story2.bookSearch.SearchFragment"
-        android:label="SearchFragment" />
-    <fragment
-        android:id="@+id/playerSettingsNavigationFragment"
-        android:name="com.jainam.story2.player.playerSettings.playerSettingsNavigation.PlayerSettingsNavigationFragment"
-        android:label="PlayerSettingsNavigationFragment" >
+        android:label="SearchFragment" >
         <action
-            android:id="@+id/action_playerSettingsNavigationFragment_to_voiceSelectionMenuFragment"
-            app:destination="@id/voiceSelectionMenuFragment" />
+            android:id="@+id/action_searchFragment_to_playerGraph"
+            app:destination="@id/playerGraph"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popEnterAnim="@anim/fragment_close_enter" >
+            <argument android:name="uriAsString"
+                app:argType="string"/>
+            <argument
+                android:name="lastPage"
+                app:argType="integer" />
+            <argument
+                android:name="lastPosition"
+                app:argType="integer" />
+            <argument
+                android:name="language"
+                app:argType="string" />
+            <argument
+                android:name="bookLength"
+                app:argType="integer"/>
+        </action>
     </fragment>
-    <dialog
-        android:id="@+id/voiceListFragmentModelBottomSheet"
-        android:name="com.jainam.story2.player.voiceSeclection.VoiceListFragmentModelBottomSheet"
-        android:label="fragment_voice_list_model_bottom_sheet_list_dialog"
-        tools:layout="@layout/fragment_voice_list_model_bottom_sheet_list_dialog" />
+    <navigation
+        android:id="@+id/playerGraph"
+        app:startDestination="@id/playerFragment2" >
+        <fragment
+            android:id="@+id/playerFragment2"
+            android:name="com.jainam.story2.player.PlayerFragment2"
+            android:label="PlayerFragment2"
+            app:startDestination="@id/action_playerFragment2_to_musicSelectionFragment">
+            <argument
+                android:name="uriAsString"
+                app:argType="string" />
+            <argument
+                android:name="lastPage"
+                app:argType="integer" />
+            <argument
+                android:name="lastPosition"
+                app:argType="integer" />
+            <argument
+                android:name="language"
+                app:argType="string"/>
+            <argument
+                android:name="bookLength"
+                app:argType="integer"
+                android:defaultValue="1" />
+            <action
+                android:id="@+id/action_playerFragment2_to_musicSelectionFragment"
+                app:destination="@id/musicSelectionFragment"
+                app:enterAnim="@anim/fragment_open_enter"
+                app:popEnterAnim="@anim/fragment_close_enter" />
+            <action
+                android:id="@+id/action_playerFragment2_to_voiceFragment"
+                app:destination="@id/voiceFragment"
+                app:enterAnim="@anim/fragment_open_enter"
+                app:popEnterAnim="@anim/fragment_close_enter" />
+        </fragment>
+        <fragment
+            android:id="@+id/voiceFragment"
+            android:name="com.jainam.story2.VoiceFragment"
+            android:label="VoiceFragment">
+            <argument
+                android:name="playButtonState"
+                app:argType="com.jainam.story2.player.PlayButtonState" />
+        </fragment>
+        <dialog
+            android:id="@+id/musicSelectionFragment"
+            android:name="com.jainam.story2.player.music.MusicSelectionFragment"
+            android:label="MusicSelectionFragment" />
+        <argument
+            android:name="bookLength"
+            android:defaultValue="1" />
+    </navigation>
+    <fragment
+        android:id="@+id/googleTTSFragment"
+        android:name="com.jainam.story2.google_tts.GoogleTTSFragment"
+        android:label="fragment_google_tts"
+        tools:layout="@layout/fragment_google_tts" >
+        <action
+            android:id="@+id/action_googleTTSFragment_to_homeFragment2"
+            app:destination="@id/homeFragment2"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:popEnterAnim="@anim/fragment_close_enter" />
+    </fragment>
 </navigation>

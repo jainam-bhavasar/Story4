@@ -11,7 +11,12 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/Sharp" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/epublib-core-latest" />
+            <option value="$PROJECT_DIR$/itext-io-7.1.10" />
+            <option value="$PROJECT_DIR$/itext-kernel-7.1.10" />
+            <option value="$PROJECT_DIR$/slf4j-android-1.6.1-RC1" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

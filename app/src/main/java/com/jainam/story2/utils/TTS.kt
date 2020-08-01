@@ -3,20 +3,21 @@ package com.jainam.story2.utils
 import android.content.Context
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
-import android.speech.tts.UtteranceProgressListener
 import android.speech.tts.Voice
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import java.util.*
 import kotlin.collections.ArrayList
 
 class TTS(
-    private val context: Context
+    context: Context,
+    val lang:String,
+    private val voiceName:String?
 ) {
 
-    val tts = TextToSpeech(context, onInitListener(),"com.google.android.tts")
-    val isSpeakingFinished = MutableLiveData(false)
+    val tts = TextToSpeech(context, onInitListener())
     private var queuedText = " "
     private val tag = "TTS"
     private fun onInitListener(): TextToSpeech.OnInitListener {
@@ -25,6 +26,19 @@ class TTS(
                 isTtsInitialised.postValue(true)
                 Log.d(tag, "onInitListener: $queuedText")
                 speak(queuedText)
+
+                //setting th language to our required language it its available
+                if (tts.isLanguageAvailable(Locale(lang)) >= 0){
+                    tts.language = Locale(lang)
+
+                  // setting the voice with the name that we saved in database if that voice exists
+                 tts.getVoiceWithName(voiceName)?.let {
+                     tts.voice = it
+                 }
+
+                }
+
+                //logging out the language of tts
             }
         }
     }
@@ -41,12 +55,13 @@ class TTS(
         }
 
 
-
         val params = Bundle()
         params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "")
-        tts.speak(text, TextToSpeech.QUEUE_FLUSH,params,"ID")
+        tts.speak(text, TextToSpeech.QUEUE_ADD,params,"ID")
 
     }
+
+
 
     fun stop(){
         tts.stop()
@@ -76,6 +91,16 @@ class TTS(
         }
 
         return countryToItsVoicesMap
+    }
+
+    private fun TextToSpeech.getVoiceWithName(name:String?):Voice?{
+        if (name != null){
+            for (voice in this.voices){
+                if (voice.name == name) return voice
+            }
+            return null
+        }else return null
+
     }
 
 

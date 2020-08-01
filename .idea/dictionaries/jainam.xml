@@ -3,6 +3,7 @@
     <words>
       <w>amiri</w>
       <w>coroutine</w>
+      <w>crashlytics</w>
       <w>emoji</w>
       <w>epub</w>
       <w>jainam</w>
@@ -13,6 +14,7 @@
       <w>openxmlformats</w>
       <w>seekbar</w>
       <w>semibold</w>
+      <w>tesseract</w>
       <w>wordprocessingml</w>
     </words>
   </dictionary>
