@@ -67,11 +67,7 @@ class PlayerFragment : Fragment() {
 
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        val playerViewModel2: PlayerViewModel? = playerViewModel
 
-    }
 
 
 }
