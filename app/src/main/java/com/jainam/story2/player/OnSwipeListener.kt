@@ -2,11 +2,12 @@ package com.jainam.story2.player
 
 import android.content.ContentValues.TAG
 import android.util.Log
+import android.view.GestureDetector
 import android.view.GestureDetector.SimpleOnGestureListener
 import android.view.MotionEvent
 
 
-class OnSwipeListener : SimpleOnGestureListener() {
+class OnSwipeListener(val swiped :(direction:Direction)->Unit,val doubleTapped:()->Unit) : SimpleOnGestureListener() {
     override fun onFling(
         e1: MotionEvent,
         e2: MotionEvent,
@@ -43,7 +44,13 @@ class OnSwipeListener : SimpleOnGestureListener() {
     /** Override this method. The Direction enum will tell you how the user swiped.  */
     private fun onSwipe(direction: Direction?): Boolean {
         Log.d(TAG, "onSwipe: $direction")
+        swiped(direction?:Direction.LEFT)
         return false
+    }
+
+    override fun onDoubleTap(e: MotionEvent?): Boolean {
+        doubleTapped()
+        return true
     }
 
     /**
@@ -117,4 +124,5 @@ class OnSwipeListener : SimpleOnGestureListener() {
             }
         }
     }
+
 }

@@ -1,20 +1,24 @@
 package com.jainam.story2.utils
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
+import android.speech.tts.UtteranceProgressListener
 import android.speech.tts.Voice
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import nl.siegmann.epublib.epub.NCXDocument
 import java.util.*
-import kotlin.collections.ArrayList
+import kotlin.jvm.internal.Intrinsics
+
 
 class TTS(
     context: Context,
-    val lang:String,
-    private val voiceName:String?
+    val lang: String,
+    private val voiceName: String?
 ) {
 
     val tts = TextToSpeech(context, onInitListener())
@@ -25,7 +29,7 @@ class TTS(
             if (status == TextToSpeech.SUCCESS) {
                 isTtsInitialised.postValue(true)
                 Log.d(tag, "onInitListener: $queuedText")
-                speak(queuedText)
+                speak(queuedText,{},{})
 
                 //setting th language to our required language it its available
                 if (tts.isLanguageAvailable(Locale(lang)) >= 0){
@@ -46,25 +50,37 @@ class TTS(
     private var isTtsInitialised = MutableLiveData(false)
 
 
-    fun speak(text:String){
+    fun speak(text: String?, onStartCallBack: ()->Unit, onDoneCallback: ()->Unit) {
 
-        if (!isTtsInitialised.value!!){
-            queuedText = text
+        val value = isTtsInitialised.value
+        if (!value!!) {
+            queuedText = text!!
             Log.d(tag, "speak: tts.speak() returned early ")
             return
         }
-
-
         val params = Bundle()
-        params.putString(TextToSpeech.Engine.KEY_PARAM_UTTERANCE_ID, "")
-        tts.speak(text, TextToSpeech.QUEUE_ADD,params,"ID")
+        params.putString("utteranceId", "")
+        tts.speak(text, 0, params, "ID")
+        tts.setSpeechRate(0.9f)
+        tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
+            override fun onStart(utteranceId: String?) {
+                onStartCallBack()
+            }
 
+            override fun onDone(utteranceId: String?) {
+                onDoneCallback()
+            }
+
+            override fun onError(utteranceId: String?) {
+                Log.d(TAG, "onError: text to speech error ")
+            }
+        })
     }
 
-
-
-    fun stop(){
+    fun stop(onDoneCallback: Function0<Unit>) {
+        Intrinsics.checkNotNullParameter(onDoneCallback, "onDoneCallback")
         tts.stop()
+        onDoneCallback.invoke()
     }
 
 
@@ -73,13 +89,13 @@ class TTS(
 
 
     //return all Voices
-    fun getAllVoicesOfLang(lang :String):Map<String,ArrayList<Voice>>{
+    fun getAllVoicesOfLang(lang: String):Map<String, ArrayList<Voice>>{
         runBlocking {
             while (tts.voices == null)delay(300)
-            Log.d("tts","waiting")
+            Log.d("tts", "waiting")
         }
 
-        val countryToItsVoicesMap = mutableMapOf<String,ArrayList<Voice>>()
+        val countryToItsVoicesMap = mutableMapOf<String, ArrayList<Voice>>()
         val voicesWithRequiredLang = tts.voices.filter { voice -> voice.locale.language == lang }
         for (voice in voicesWithRequiredLang){
             if (countryToItsVoicesMap.containsKey(voice.locale.country)){
@@ -93,7 +109,7 @@ class TTS(
         return countryToItsVoicesMap
     }
 
-    private fun TextToSpeech.getVoiceWithName(name:String?):Voice?{
+    private fun TextToSpeech.getVoiceWithName(name: String?):Voice?{
         if (name != null){
             for (voice in this.voices){
                 if (voice.name == name) return voice

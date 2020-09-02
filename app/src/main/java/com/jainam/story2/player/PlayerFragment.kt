@@ -34,8 +34,8 @@ class PlayerFragment : Fragment(),View.OnTouchListener {
     var mGestureDetector: GestureDetectorCompat? = null
 
     /* access modifiers changed from: private */
-    var playerViewModel: PlayerViewModel? = null
-
+    private lateinit var playerViewModel: PlayerViewModel
+    private lateinit var playerViewModel2Factory: PlayerViewModel2Factory
     /* access modifiers changed from: private */
     private val simpleFingerGestures: SimpleFingerGestures = SimpleFingerGestures()
     private lateinit var gestureDetector:GestureDetector
@@ -50,7 +50,7 @@ class PlayerFragment : Fragment(),View.OnTouchListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        gestureDetector = GestureDetector(context,OnSwipeListener())
+
 
     }
 
@@ -67,6 +67,13 @@ class PlayerFragment : Fragment(),View.OnTouchListener {
     @SuppressLint("ClickableViewAccessibility")
     override fun onStart() {
         super.onStart()
+        gestureDetector = GestureDetector(
+            context,
+            OnSwipeListener(
+                { playerViewModel!!.onSwipe(direction = it) },
+                { Log.d(TAG, "onCreate: double tapped") }
+            )
+        )
         binding.imageView!!.setOnTouchListener(this)
     }
 
