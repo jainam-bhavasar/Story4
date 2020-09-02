@@ -74,6 +74,7 @@ dependencies {
     implementation project(path: ':slf4j-android-1.6.1-RC1')
     implementation project(path: ':itext-io-7.1.10')
     implementation project(path: ':itext-kernel-7.1.10')
+    implementation files('libs/libSFG-1.1-release.jar')
     def lifecycle_version = "2.2.0"
     def arch_version = "2.1.0"
     def activity_version = "1.1.0"

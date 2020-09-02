@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph.xml"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/googleTTSFragment">
     <fragment
         android:id="@+id/homeFragment2"
         android:name="com.jainam.story2.home.HomeFragment"
@@ -37,24 +37,6 @@
         </action>
     </fragment>
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.jainam.story2.auth.LoginFragment"
-        android:label="LoginFragment" >
-        <action
-            android:id="@+id/action_loginFragment_to_homeFragment2"
-            app:destination="@id/homeFragment2"
-            app:enterAnim="@anim/fragment_close_enter"
-            app:exitAnim="@anim/fragment_close_exit"
-            app:popEnterAnim="@anim/fragment_open_enter"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_loginFragment_to_googleTTSFragment"
-            app:destination="@id/googleTTSFragment"
-            app:enterAnim="@anim/fragment_open_enter"
-            app:popEnterAnim="@anim/fragment_close_enter" />
-    </fragment>
-    <fragment
         android:id="@+id/searchFragment"
         android:name="com.jainam.story2.bookSearch.SearchFragment"
         android:label="SearchFragment" >
@@ -84,7 +66,7 @@
         app:startDestination="@id/playerFragment2" >
         <fragment
             android:id="@+id/playerFragment2"
-            android:name="com.jainam.story2.player.PlayerFragment2"
+            android:name="com.jainam.story2.player.PlayerFragment"
             android:label="PlayerFragment2"
             app:startDestination="@id/action_playerFragment2_to_musicSelectionFragment">
             <argument

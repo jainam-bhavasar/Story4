@@ -14,8 +14,8 @@ class PlayerViewModel2Factory(private val uri: Uri, private val application: App
 
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if(modelClass.isAssignableFrom(PlayerViewModel2::class.java)){
-            return PlayerViewModel2(
+        if(modelClass.isAssignableFrom(PlayerViewModel::class.java)){
+            return PlayerViewModel(
                 application = application,
                 uri = uri,
                 bookDatabaseDao = bookDatabaseDao,

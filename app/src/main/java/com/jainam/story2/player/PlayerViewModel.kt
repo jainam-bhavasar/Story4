@@ -3,12 +3,8 @@ package com.jainam.story2.player
 import android.app.Application
 import android.content.Context
 import android.net.Uri
-import android.os.Bundle
-import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
-import android.util.Log
 import android.view.accessibility.AccessibilityManager
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -20,18 +16,16 @@ import com.jainam.story2.utils.TTS
 import com.jainam.story2.utils.Type
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 import java.util.*
 import kotlin.collections.ArrayList
 
-class PlayerViewModel2(application: Application,
-                       var lastPage :Int,
-                       var lastPosition:Int,
-                       val uri: Uri,
-                       val bookDatabaseDao: BookDatabaseDao,
-                       val language:String,val bookLength:Int = 1) :AndroidViewModel(application){
+class PlayerViewModel(application: Application,
+                      var lastPage :Int,
+                      var lastPosition:Int,
+                      val uri: Uri,
+                      val bookDatabaseDao: BookDatabaseDao,
+                      val language:String, val bookLength:Int = 1) :AndroidViewModel(application){
     private val TAG: String = "PVM2"
     private val tag = "pvm2"
     private val context = application.applicationContext
@@ -248,8 +242,8 @@ class PlayerViewModel2(application: Application,
             val thumbnail = bookDatabaseDao.get(uriString = uri.toString() )
 
 
-            lastPage = this@PlayerViewModel2.currentPageNum.value!!
-            lastPosition = this@PlayerViewModel2.currentPosition.value!!
+            lastPage = this@PlayerViewModel.currentPageNum.value!!
+            lastPosition = this@PlayerViewModel.currentPosition.value!!
             thumbnail.lastPage = lastPage
             thumbnail.lastPosition = lastPosition
             bookDatabaseDao.update(thumbnail)

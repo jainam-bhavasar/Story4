@@ -13,7 +13,7 @@
             />
         <variable
             name="playerViewModel"
-            type="com.jainam.story2.player.PlayerViewModel2" />
+            type="com.jainam.story2.player.PlayerViewModel" />
         <variable
             name="playButtonState"
             type="com.jainam.story2.player.PlayButtonState" />
@@ -27,7 +27,7 @@
         tools:background="@drawable/ic_app_background"
         android:id="@+id/playerConstraintLayout"
         android:layout_height="match_parent"
-        tools:context=".player.PlayerFragment2">
+        tools:context=".player.PlayerFragment">
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/textCardViewPager"

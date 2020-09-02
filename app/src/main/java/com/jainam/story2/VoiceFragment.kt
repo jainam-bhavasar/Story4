@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jainam.story2.database.BookDatabase
 import com.jainam.story2.databinding.FragmentVoiceBinding
 import com.jainam.story2.player.PlayButtonState
-import com.jainam.story2.player.PlayerViewModel2
+import com.jainam.story2.player.PlayerViewModel
 import com.jainam.story2.player.voice.CountryChooseAdapter
 import com.jainam.story2.player.voice.CountrySpecificVoiceChooseAdapter
 import com.jainam.story2.player.voice.VoiceViewModel
@@ -40,7 +40,7 @@ class VoiceFragment : Fragment() {
     private lateinit var binding:FragmentVoiceBinding
     private lateinit var playButtonState: PlayButtonState
     //player view model
-    val playerViewModel2: PlayerViewModel2 by navGraphViewModels(R.id.playerGraph)
+    val playerViewModel: PlayerViewModel by navGraphViewModels(R.id.playerGraph)
     private lateinit var voiceViewModel:VoiceViewModel
     private lateinit var accessibilityManager:AccessibilityManager
 
@@ -56,7 +56,7 @@ class VoiceFragment : Fragment() {
 
         val dataSource = BookDatabase.getInstance(application).thumbnailDatabaseDao
         //initialising voice view model
-        val voiceViewModelFactory = VoiceViewModelFactory(voice = playerViewModel2.tts.tts.voice,tts = playerViewModel2.tts,bookDatabaseDao = dataSource)
+        val voiceViewModelFactory = VoiceViewModelFactory(voice = playerViewModel.tts.tts.voice,tts = playerViewModel.tts,bookDatabaseDao = dataSource)
         voiceViewModel = ViewModelProvider(this,voiceViewModelFactory).get(VoiceViewModel::class.java)
 
         accessibilityManager  = requireContext().getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
@@ -77,7 +77,7 @@ class VoiceFragment : Fragment() {
         binding.speedSeekBar.apply {
             contentDescription = "Speed"
             max = 200
-            progress = playerViewModel2.speed.value
+            progress = playerViewModel.speed.value
             seekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
@@ -85,8 +85,8 @@ class VoiceFragment : Fragment() {
                     fromUser: Boolean
                 ) {
                     if (accessibilityManager.isEnabled and accessibilityManager.isTouchExplorationEnabled){
-                        playerViewModel2.speed.value = seekbar.progress
-                        playerViewModel2.speak()
+                        playerViewModel.speed.value = seekbar.progress
+                        playerViewModel.speak()
                     }
                 }
 
@@ -95,8 +95,8 @@ class VoiceFragment : Fragment() {
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    playerViewModel2.speed.value = seekbar.progress
-                        playerViewModel2.speak()
+                    playerViewModel.speed.value = seekbar.progress
+                        playerViewModel.speak()
 
                 }
 
@@ -107,7 +107,7 @@ class VoiceFragment : Fragment() {
         binding.pitchSeekBar.apply {
             contentDescription = "Pitch"
             max = 200
-            progress = playerViewModel2.pitch.value
+            progress = playerViewModel.pitch.value
             seekbar.setOnSeekBarChangeListener(object :SeekBar.OnSeekBarChangeListener{
                 override fun onProgressChanged(
                     seekBar: SeekBar?,
@@ -115,8 +115,8 @@ class VoiceFragment : Fragment() {
                     fromUser: Boolean
                 ) {
                     if (accessibilityManager.isEnabled and accessibilityManager.isTouchExplorationEnabled){
-                        playerViewModel2.pitch.value = seekbar.progress
-                        playerViewModel2.speak()
+                        playerViewModel.pitch.value = seekbar.progress
+                        playerViewModel.speak()
                     }
                 }
 
@@ -125,8 +125,8 @@ class VoiceFragment : Fragment() {
                 }
 
                 override fun onStopTrackingTouch(seekBar: SeekBar?) {
-                    playerViewModel2.pitch.value = seekbar.progress
-                        playerViewModel2.speak()
+                    playerViewModel.pitch.value = seekbar.progress
+                        playerViewModel.speak()
 
                 }
 
@@ -156,7 +156,7 @@ class VoiceFragment : Fragment() {
                         Log.d("tts", "onStart: $it")
                         if (!it.isNetworkConnectionRequired){
                             Log.d("tts", "onStart: tts network not required")
-                            playerViewModel2.stopSpeaking()
+                            playerViewModel.stopSpeaking()
                             //if its not installed show dialog and go to download settings of text to speech
                             if (voiceViewModel.isOfflineVoiceNotInstalled(it)){
                                 showDialogForDownloadingOfflineVoices()
@@ -164,16 +164,16 @@ class VoiceFragment : Fragment() {
                             // it its installed
                             else{
                                 voiceViewModel.voice = it
-                                playerViewModel2.tts.tts.voice = it
-                                playerViewModel2.speak()
+                                playerViewModel.tts.tts.voice = it
+                                playerViewModel.speak()
                                 countrySpecificVoiceChooseAdapter.selectedVoice.postValue(it)
                             }
                         }
                         else{
                             if (isOnline()){
                                 voiceViewModel.voice = it
-                                playerViewModel2.tts.tts.voice = it
-                                playerViewModel2.speak()
+                                playerViewModel.tts.tts.voice = it
+                                playerViewModel.speak()
                                 countrySpecificVoiceChooseAdapter.selectedVoice.postValue(it)
                             }else{
                                 showDialogForShowingNetworkIsRequired()
@@ -200,7 +200,7 @@ class VoiceFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         if (playButtonState == PlayButtonState.PAUSED){
-            playerViewModel2.stopSpeaking()
+            playerViewModel.stopSpeaking()
         }
     }
 
