@@ -59,4 +59,6 @@
     <string name="install">Install</string>
     <string name="install_google_text_to_speech_from_play_store">Install Google text to speech from play store</string>
     <string name="google_text_to_speech_image">Google text to speech image</string>
+    <string name="settings">settings</string>
+    <string name="image">Image</string>
 </resources>

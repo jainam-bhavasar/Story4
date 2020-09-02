@@ -8,6 +8,7 @@ import androidx.databinding.BindingAdapter
 import com.jainam.story2.R
 import com.jainam.story2.database.Thumbnail
 import com.jainam.story2.player.PlayButtonState
+import com.jainam.story2.player.PlayerFragment
 
 @BindingAdapter("bookName")
 fun TextView.setThumbnailName(item:Thumbnail?){
@@ -38,7 +39,7 @@ fun TextView.select(item:Boolean?){
 //PLAYER FRAGMENT
 //play pause button
 @BindingAdapter("toggleButton")
-fun ImageView.toggle(item:PlayButtonState?){
+fun ImageView.toggle(item: PlayButtonState?){
     item?.let {
         if (it == PlayButtonState.PLAYING)this.setImageResource(R.drawable.ic_pause_button)else{this.setImageResource(R.drawable.ic_play_button)}
 

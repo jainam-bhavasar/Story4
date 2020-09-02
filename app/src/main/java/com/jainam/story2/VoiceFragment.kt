@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jainam.story2.database.BookDatabase
 import com.jainam.story2.databinding.FragmentVoiceBinding
 import com.jainam.story2.player.PlayButtonState
+import com.jainam.story2.player.PlayerFragment
 import com.jainam.story2.player.PlayerViewModel
 import com.jainam.story2.player.voice.CountryChooseAdapter
 import com.jainam.story2.player.voice.CountrySpecificVoiceChooseAdapter
