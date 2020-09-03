@@ -72,6 +72,25 @@
             <action
                 android:id="@+id/action_playerFragment2_to_voiceFragment"
                 app:destination="@id/voiceFragment" />
+            <argument
+                android:name="uriAsString"
+                app:argType="string" />
+            <argument
+                android:name="lastPage"
+                app:argType="integer"
+                android:defaultValue="1" />
+            <argument
+                android:name="lastPosition"
+                app:argType="integer"
+                android:defaultValue="0" />
+            <argument
+                android:name="language"
+                app:argType="string"
+                android:defaultValue="en" />
+            <argument
+                android:name="bookLength"
+                app:argType="integer"
+                android:defaultValue="1" />
         </fragment>
         <fragment
             android:id="@+id/voiceFragment"

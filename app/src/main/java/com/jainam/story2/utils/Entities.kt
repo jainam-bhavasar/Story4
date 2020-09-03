@@ -88,8 +88,8 @@ class Entities(private val mBook: MyBook, val context: Context) {
         val currentEntity: String
             get() {
                return when(mCurrentEntityName){
-                    Entity.WORD->mPage.getCurrentWord()
-                    Entity.SENTENCE->mPage.getMCurrentSentence()
+                    Entity.WORD->mPage.mCurrentWord
+                    Entity.SENTENCE->mPage.mCurrentSentence
                     Entity.PAGE-> mPage.getPageText()!!
                 }
             }
