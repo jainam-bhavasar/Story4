@@ -10,20 +10,20 @@ interface BookDatabaseDao
 
 
     @Insert
-    fun insert(thumbnail: Thumbnail)
+    fun insert(bookMetaData: BookMetaData)
 
     @Delete
-    fun delete(thumbnail: Thumbnail)
+    fun delete(bookMetaData: BookMetaData)
 
     @Update
-    fun update(thumbnail: Thumbnail)
+    fun update(bookMetaData: BookMetaData)
 
-    @Query("SELECT * FROM Thumbnail WHERE uriAsString = :uriString")
-    suspend fun get(uriString:String):Thumbnail
+    @Query("SELECT * FROM BookMetaData WHERE uriAsString = :uriString")
+    suspend fun get(uriString:String):BookMetaData
 
 
-    @Query("SELECT * FROM Thumbnail ORDER BY thumbnailID DESC")
-    fun getAllThumbnails():LiveData<List<Thumbnail>>
+    @Query("SELECT * FROM BookMetaData ORDER BY thumbnailID DESC")
+    fun getAllThumbnails():LiveData<List<BookMetaData>>
 
     @Query("SELECT * FROM MyVoice WHERE language = :language")
     fun getVoiceOfLang(language:String):MyVoice?

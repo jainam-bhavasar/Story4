@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.jainam.story2.database.Thumbnail
+import com.jainam.story2.database.BookMetaData
 import com.jainam.story2.databinding.ThumbnailItemBinding
 
 
-class ThumbnailViewAdapter(private val clickListener: ThumbnailClickListener) : ListAdapter<Thumbnail, ThumbnailViewAdapter.ViewHolder>(ThumbnailDiffUtilCallback) {
+class ThumbnailViewAdapter(private val clickListener: ThumbnailClickListener) : ListAdapter<BookMetaData, ThumbnailViewAdapter.ViewHolder>(ThumbnailDiffUtilCallback) {
     lateinit var onClickListenerVariable:OnClickListener
 
    inner class ViewHolder(val binding: ThumbnailItemBinding) : RecyclerView.ViewHolder(binding.root) , View.OnLongClickListener{
@@ -48,15 +48,15 @@ class ThumbnailViewAdapter(private val clickListener: ThumbnailClickListener) : 
         fun onItemLongClick(position: Int, v: View?)
     }
 }
-class ThumbnailClickListener(val clickListener: (Thumbnail) ->Unit){
-    fun onClick(thumbnail: Thumbnail) = clickListener(thumbnail)
+class ThumbnailClickListener(val clickListener: (BookMetaData) ->Unit){
+    fun onClick(bookMetaData: BookMetaData) = clickListener(bookMetaData)
 }
-object ThumbnailDiffUtilCallback:DiffUtil.ItemCallback<Thumbnail>(){
-    override fun areItemsTheSame(oldItem: Thumbnail, newItem: Thumbnail): Boolean {
+object ThumbnailDiffUtilCallback:DiffUtil.ItemCallback<BookMetaData>(){
+    override fun areItemsTheSame(oldItem: BookMetaData, newItem: BookMetaData): Boolean {
         return oldItem.thumbnailID==newItem.thumbnailID
     }
 
-    override fun areContentsTheSame(oldItem: Thumbnail, newItem: Thumbnail): Boolean {
+    override fun areContentsTheSame(oldItem: BookMetaData, newItem: BookMetaData): Boolean {
         return oldItem == newItem
     }
 

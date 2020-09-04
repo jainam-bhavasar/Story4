@@ -11,7 +11,7 @@ import android.net.Uri
 import android.provider.OpenableColumns
 import androidx.lifecycle.AndroidViewModel
 import com.jainam.story2.database.BookDatabaseDao
-import com.jainam.story2.database.Thumbnail
+import com.jainam.story2.database.BookMetaData
 import com.jainam.story2.utils.GetText
 import kotlinx.coroutines.*
 import java.io.File
@@ -48,7 +48,7 @@ class HomeViewModel(private var databaseDao: BookDatabaseDao, application:Applic
             val getText: GetText? = context.contentResolver.openInputStream(uriOfCopiedFile)?.let { GetText(type = type,inputStream = it) }
 
 
-            val thumbnail  = Thumbnail(
+            val thumbnail  = BookMetaData(
                 thumbnailName = nameWithoutSuffix,
                 uriAsString = uriOfCopiedFile.toString(),
                 type = type.name,
@@ -62,9 +62,9 @@ class HomeViewModel(private var databaseDao: BookDatabaseDao, application:Applic
 
 
 
-    private suspend fun insertThumbnail(thumbnail: Thumbnail) {
+    private suspend fun insertThumbnail(bookMetaData: BookMetaData) {
         withContext(Dispatchers.IO){
-            databaseDao.insert(thumbnail)
+            databaseDao.insert(bookMetaData)
         }
     }
 
@@ -74,10 +74,10 @@ class HomeViewModel(private var databaseDao: BookDatabaseDao, application:Applic
 
 
 
-    fun  delete(thumbnail: Thumbnail){
+    fun  delete(bookMetaData: BookMetaData){
         uiScope.launch {
             withContext(Dispatchers.IO){
-                databaseDao.delete(thumbnail)
+                databaseDao.delete(bookMetaData)
             }
         }
 

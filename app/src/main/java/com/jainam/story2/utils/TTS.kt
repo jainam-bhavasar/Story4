@@ -61,7 +61,6 @@ class TTS(
         val params = Bundle()
         params.putString("utteranceId", "")
         tts.speak(text, 0, params, "ID")
-        tts.setSpeechRate(0.9f)
         tts.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
             override fun onStart(utteranceId: String?) {
                 onStartCallBack()

@@ -25,28 +25,39 @@ class Page(pageNum: Int, private val myBook: MyBook, context: Context) {
             if (value <= myBook.bookLength && value > 0) {
                 field = value
                 pageText = getText.getTextAtPage(value)
-                mSentenceList = languageFullStopCharacter.let { pageText!!.split(it) }
+                mSentenceList = languageFullStopCharacter.let { pageText.split(it) }
                 mWordList = createWordListFromSentenceList(mSentenceList)
             }
         }
 
 
 
+    var pageText: String = getText.getTextAtPage(mPagePosition)
 
-    private lateinit var mSentenceList: List<String>
+    //sentence stuff
+    private  var mSentenceList: List<String> = pageText.split(languageFullStopCharacter)
     var mSentencePositionInPage = 0
-    private var mWordList: ArrayList<Triple<String, Int, Int>>? = null
+    val mCurrentSentence:String get()= mSentenceList[mSentencePositionInPage]
+    val sentenceListSize:Int get() = mSentenceList.size
+
+    //word Sruff
+    private var mWordList: ArrayList<Triple<String, Int, Int>> = createWordListFromSentenceList(mSentenceList)
+     val mWordListSize:Int get() = mWordList.size
     var mWordPositionInPage = 0
 
+    val mCurrentWord: String
+        get() {
+            return mWordList!![mWordPositionInPage].first
+        }
 
-     var pageText: String? = getText?.getTextAtPage(pageNum)
+    val mCurrentWordTriple: Triple<String, Int, Int>
+        get(){
+            return mWordList[mWordPositionInPage]
+        }
 
 
 
 
-    fun getCurrentWordTriple(): Triple<String, Int, Int> {
-        return mWordList!![mWordPositionInPage]
-    }
 
     fun setWordToCurrentSentenceHead(sentenceNum: Int) {
         for (wordTriple in mWordList!!){
@@ -57,12 +68,8 @@ class Page(pageNum: Int, private val myBook: MyBook, context: Context) {
         }
     }
 
-    val mCurrentWord: String
-        get() {
-        return mWordList!![mWordPositionInPage].first
-    }
 
-    val mCurrentSentence:String get()= mSentenceList[mSentencePositionInPage]
+
 
    companion object {
 

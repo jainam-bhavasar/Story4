@@ -34,6 +34,9 @@
             <argument
                 android:name="bookLength"
                 app:argType="integer"/>
+            <argument
+                android:name="entity"
+                app:argType="com.jainam.story2.utils.Entity"/>
         </action>
     </fragment>
     <fragment
@@ -59,53 +62,61 @@
             <argument
                 android:name="bookLength"
                 app:argType="integer"/>
+            <argument
+                android:name="entity"
+                app:argType="com.jainam.story2.utils.Entity"/>
         </action>
     </fragment>
     <navigation
         android:id="@+id/playerGraph"
-        app:startDestination="@id/playerFragment2" >
+        app:startDestination="@id/playerFragment" >
         <fragment
-            android:id="@+id/playerFragment2"
+            android:id="@+id/playerFragment"
             android:name="com.jainam.story2.player.PlayerFragment"
-            android:label="PlayerFragment2"
-           >
-            <action
-                android:id="@+id/action_playerFragment2_to_voiceFragment"
-                app:destination="@id/voiceFragment" />
+            android:label="PlayerFragment">
             <argument
                 android:name="uriAsString"
                 app:argType="string" />
             <argument
                 android:name="lastPage"
-                app:argType="integer"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="integer" />
             <argument
                 android:name="lastPosition"
-                app:argType="integer"
-                android:defaultValue="0" />
+                android:defaultValue="0"
+                app:argType="integer" />
             <argument
                 android:name="language"
-                app:argType="string"
-                android:defaultValue="en" />
+                android:defaultValue="en"
+                app:argType="string" />
             <argument
                 android:name="bookLength"
-                app:argType="integer"
-                android:defaultValue="1" />
+                android:defaultValue="1"
+                app:argType="integer" />
+            <argument
+                android:name="entity"
+                app:argType="com.jainam.story2.utils.Entity"
+                />
+            <action
+                android:id="@+id/action_playerFragment_to_voiceFragment"
+                app:destination="@id/voiceFragment"
+                app:enterAnim="@anim/fragment_close_enter"
+                app:popEnterAnim="@anim/fragment_close_exit">
+                <argument
+                    android:name="speakState"
+                    app:argType="com.jainam.story2.player.SpeakState" />
+            </action>
+
         </fragment>
         <fragment
             android:id="@+id/voiceFragment"
             android:name="com.jainam.story2.VoiceFragment"
-            android:label="VoiceFragment">
-
+            android:label="VoiceFragment" >
 
             <argument
-                android:name="playButtonState"
-                app:argType="com.jainam.story2.player.PlayButtonState"
-                android:defaultValue="PAUSED" />
+                android:name="speakState"
+                app:argType="com.jainam.story2.player.SpeakState" />
         </fragment>
-        <argument
-            android:name="bookLength"
-            android:defaultValue="1" />
     </navigation>
     <fragment
         android:id="@+id/googleTTSFragment"

@@ -17,9 +17,9 @@ import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jainam.story2.database.BookDatabase
 import com.jainam.story2.databinding.FragmentVoiceBinding
-import com.jainam.story2.player.PlayButtonState
 import com.jainam.story2.player.PlayerFragment
 import com.jainam.story2.player.PlayerViewModel
+import com.jainam.story2.player.SpeakState
 import com.jainam.story2.player.voice.CountryChooseAdapter
 import com.jainam.story2.player.voice.CountrySpecificVoiceChooseAdapter
 import com.jainam.story2.player.voice.VoiceViewModel
@@ -39,7 +39,7 @@ import java.net.SocketAddress
 class VoiceFragment : Fragment() {
 
     private lateinit var binding:FragmentVoiceBinding
-    private lateinit var playButtonState: PlayButtonState
+    private lateinit var speakState: SpeakState
     //player view model
     val playerViewModel: PlayerViewModel by navGraphViewModels(R.id.playerGraph)
     private lateinit var voiceViewModel:VoiceViewModel
@@ -52,7 +52,7 @@ class VoiceFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         val args = VoiceFragmentArgs.fromBundle(requireArguments())
-        playButtonState = args.playButtonState
+        speakState = args.speakState
         val application = requireNotNull(this.activity).application
 
         val dataSource = BookDatabase.getInstance(application).thumbnailDatabaseDao
@@ -200,7 +200,7 @@ class VoiceFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (playButtonState == PlayButtonState.PAUSED){
+        if (speakState == SpeakState.PAUSED){
             playerViewModel.stopSpeaking()
         }
     }

@@ -5,11 +5,12 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.jainam.story2.database.BookDatabaseDao
+import com.jainam.story2.utils.Entity
 import java.lang.IllegalArgumentException
 
 class PlayerViewModel2Factory(private val uri: Uri, private val application: Application,
                               private val lastPage :Int,private val lastPosition:Int,
-                              private val bookDatabaseDao: BookDatabaseDao,private val language:String,val bookLength:Int ):
+                              private val bookDatabaseDao: BookDatabaseDao,private val language:String,val bookLength:Int ,private val entity: Entity):
     ViewModelProvider.Factory {
 
     @Suppress("unchecked_cast")
@@ -20,7 +21,7 @@ class PlayerViewModel2Factory(private val uri: Uri, private val application: App
                 uri = uri,
                 bookDatabaseDao = bookDatabaseDao,
                 lastPosition = lastPosition,
-                lastPage = lastPage,language = language,bookLength = bookLength) as T
+                lastPage = lastPage,language = language,bookLength = bookLength,entity = entity) as T
         }
         throw IllegalArgumentException("Unknown ViewModel Class")
     }

@@ -6,13 +6,13 @@ import android.util.Log
 import com.jainam.story2.database.MyBook
 
 
-class Entities(private val mBook: MyBook, val context: Context) {
+class Entities(private val mBook: MyBook, val context: Context,val lastPage:Int ,val entity: Entity) {
 
-    private var mCurrentEntityName: Entity = Entity.WORD
+    var mCurrentEntityName: Entity = entity
     private var mIsLastPage = false
     private var mIsLastSentence = false
     private var mIsLastWord = false
-    private val mPage = Page(1, mBook, context)
+    private val mPage = Page(lastPage, mBook, context)
 
 
 
@@ -28,7 +28,7 @@ class Entities(private val mBook: MyBook, val context: Context) {
             }
         }
 
-        fun getPreviousEntity(swiped: Boolean) {
+        fun getPreviousEntity() {
             when(mCurrentEntityName){
                 Entity.PAGE->previousPage()
                 Entity.SENTENCE->previousSentence()
@@ -52,7 +52,7 @@ class Entities(private val mBook: MyBook, val context: Context) {
 
         private fun wordToSentence() {
             val page = mPage
-            page.mSentencePositionInPage = page.getCurrentWordTriple().third
+            page.mSentencePositionInPage = page.mCurrentWordTriple.third
             mCurrentEntityName = Entity.SENTENCE
         }
 
@@ -90,7 +90,7 @@ class Entities(private val mBook: MyBook, val context: Context) {
                return when(mCurrentEntityName){
                     Entity.WORD->mPage.mCurrentWord
                     Entity.SENTENCE->mPage.mCurrentSentence
-                    Entity.PAGE-> mPage.getPageText()!!
+                    Entity.PAGE-> mPage.pageText
                 }
             }
         val isLastEntity: Boolean
@@ -103,45 +103,57 @@ class Entities(private val mBook: MyBook, val context: Context) {
             }
 
         private fun nextSentence(): String {
-            if (mPage.mSentencePositionInPage != mPage.getSentenceListSize() - 1) {
-                val page = mPage
-                page.mSentencePositionInPage = page.mSentencePositionInPage + 1
-            } else if (mPage.mPagePosition == mBook.bookLength) {
+            when {
+                mPage.mSentencePositionInPage != mPage.sentenceListSize - 1 -> {
+                    val page = mPage
+                    page.mSentencePositionInPage = page.mSentencePositionInPage + 1
+                }
+                mPage.mPagePosition == mBook.bookLength -> {
 
-                mIsLastSentence = true
-            } else {
-                nextPage()
-                mPage.mSentencePositionInPage = 0
+                    mIsLastSentence = true
+                }
+                else -> {
+                    nextPage()
+                    mPage.mSentencePositionInPage = 0
+                }
             }
-            return mPage.getMCurrentSentence()
+            return mPage.mCurrentSentence
         }
 
         private fun previousSentence(): String {
-            if (mPage.mSentencePositionInPage != 0) {
-                val page = mPage
-                page.mSentencePositionInPage = page.mSentencePositionInPage - 1
-            } else if (mPage.mPagePosition == 1) {
-                Log.d(TAG, "previousSentence: book starts here")
-            } else {
-                previousPage()
-                val page2 = mPage
-                page2.mSentencePositionInPage = page2.getSentenceListSize() - 1
+            when {
+                mPage.mSentencePositionInPage != 0 -> {
+                    val page = mPage
+                    page.mSentencePositionInPage = page.mSentencePositionInPage - 1
+                }
+                mPage.mPagePosition == 1 -> {
+                    Log.d(TAG, "previousSentence: book starts here")
+                }
+                else -> {
+                    previousPage()
+                    val page2 = mPage
+                    page2.mSentencePositionInPage = page2.sentenceListSize - 1
+                }
             }
 
-            return mPage.getMCurrentSentence()
+            return mPage.mCurrentSentence
         }
 
         private fun nextWord() {
-            if (mPage.mWordPositionInPage != mPage.getWordListSize() - 1) {
-                val page = mPage
-                page.mWordPositionInPage = page.mWordPositionInPage + 1
-            } else if (mPage.mPagePosition == mBook.bookLength) {
-                mIsLastWord = true
+            when {
+                mPage.mWordPositionInPage != mPage.mWordListSize - 1 -> {
+                    val page = mPage
+                    page.mWordPositionInPage = page.mWordPositionInPage + 1
+                }
+                mPage.mPagePosition == mBook.bookLength -> {
+                    mIsLastWord = true
 
-            } else {
-                mIsLastWord = false
-                nextPage()
-                mPage.mWordPositionInPage = 0
+                }
+                else -> {
+                    mIsLastWord = false
+                    nextPage()
+                    mPage.mWordPositionInPage = 0
+                }
             }
         }
 
@@ -154,7 +166,7 @@ class Entities(private val mBook: MyBook, val context: Context) {
                 mIsLastWord = false
                 previousPage()
                 val page2 = mPage
-                page2.mWordPositionInPage = page2.getWordListSize() - 1
+                page2.mWordPositionInPage = page2.mWordListSize - 1
             }
         }
 
@@ -163,9 +175,9 @@ class Entities(private val mBook: MyBook, val context: Context) {
                 val page = mPage
                 page.mPagePosition = page.mPagePosition - 1
                 val page2 = mPage
-                page2.mWordPositionInPage = page2.getWordListSize() - 1
+                page2.mWordPositionInPage = page2.mWordListSize - 1
                 val page3 = mPage
-                page3.mSentencePositionInPage = page3.getSentenceListSize() - 1
+                page3.mSentencePositionInPage = page3.sentenceListSize - 1
                 if (mPage.mPagePosition == mBook.bookLength) {
                     mIsLastPage = true
                 }
@@ -183,6 +195,6 @@ class Entities(private val mBook: MyBook, val context: Context) {
             mIsLastPage = true
         }
 
-
+        val pageNum:Int get() = mPage.mPagePosition
 
 }

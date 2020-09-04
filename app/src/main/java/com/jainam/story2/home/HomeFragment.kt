@@ -5,7 +5,6 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jainam.story2.database.BookDatabase
 import com.jainam.story2.databinding.HomeFragmentBinding
+import com.jainam.story2.utils.Entity
 import com.jainam.story2.utils.GetLang
 import kotlinx.coroutines.launch
 
@@ -54,8 +54,8 @@ class HomeFragment : Fragment(),GetLang{
                 viewModel = ViewModelProvider(fragment, viewModelFactory).get(HomeViewModel::class.java)
                 //  setting the recycler view
                 val thumbnailViewAdapter = ThumbnailViewAdapter( ThumbnailClickListener {
-
-                    findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToPlayerGraph(it.uriAsString,it.lastPage,it.lastPosition,it.language,it.bookLength))
+                    val entity = enumValueOf<Entity>(it.entity)
+                    findNavController().navigate(HomeFragmentDirections.actionHomeFragment2ToPlayerGraph(it.uriAsString,it.lastPage,it.lastPosition,it.language,it.bookLength,entity))
                 })
 
                 binding.thumbnailsRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -70,7 +70,7 @@ class HomeFragment : Fragment(),GetLang{
                           builder.apply {
                               setPositiveButton("Ok"
                               ) { _, _ ->
-                                  viewModel.delete(thumbnail = thumbnailViewAdapter.currentList[position])
+                                  viewModel.delete(bookMetaData = thumbnailViewAdapter.currentList[position])
 
                               }
                               setNegativeButton("Cancel"

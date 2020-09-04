@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.jainam.story2.databinding.SearchFragmentBinding
 import com.jainam.story2.home.ThumbnailClickListener
 import com.jainam.story2.home.ThumbnailViewAdapter
+import com.jainam.story2.utils.Entity
 
 
 class SearchFragment : Fragment() {
@@ -37,7 +38,8 @@ class SearchFragment : Fragment() {
 
         val thumbnailViewAdapter  = ThumbnailViewAdapter( ThumbnailClickListener {
             view?.rootView?.let { it1 -> context?.let { it2 -> hideKeyboardFrom(it2, it1) } }
-           findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToPlayerGraph(it.uriAsString,it.lastPage,it.lastPosition,it.language,it.bookLength))
+            val entity = enumValueOf<Entity>(it.entity)
+           findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToPlayerGraph(it.uriAsString,it.lastPage,it.lastPosition,it.language,it.bookLength,entity))
         })
         binding.searchFilterRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.searchFilterRecyclerView.adapter = thumbnailViewAdapter

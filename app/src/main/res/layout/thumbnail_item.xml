@@ -6,7 +6,7 @@
         <data>
                 <variable
                     name="thumbnail"
-                    type="com.jainam.story2.database.Thumbnail" />
+                    type="com.jainam.story2.database.BookMetaData" />
                 <variable
                     name="clickListener"
                     type="com.jainam.story2.home.ThumbnailClickListener" />

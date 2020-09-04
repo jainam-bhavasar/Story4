@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.jainam.story2.utils.MyVoice
 
-@Database(entities = [Thumbnail::class,MyVoice::class],version = 1,exportSchema = false)
+@Database(entities = [BookMetaData::class,MyVoice::class],version = 1,exportSchema = false)
 abstract class BookDatabase :RoomDatabase(){
     abstract val thumbnailDatabaseDao:BookDatabaseDao
 
